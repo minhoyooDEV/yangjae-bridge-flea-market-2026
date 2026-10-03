@@ -4,4 +4,8 @@
 node_modules/
 dist/
 .DS_Store
-supabase/.temp/
+**/supabase/.temp/
+.local/
+.wrangler/
+*.tsbuildinfo
+coverage/

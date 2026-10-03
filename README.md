@@ -16,12 +16,14 @@
 
 ## 현재 단계
 
-기획과 서비스 연결 준비 단계이며, 홈페이지 코드는 아직 구현하지 않았다.
-구체적인 화면, 데이터, 권한, 구현 순서는 [구현 계획](docs/implementation-plan.md)에 기록한다.
+모바일 홈페이지와 업체 관리 기능을 구현하고 Supabase에 DB·Storage 권한을 적용했다.
+방문객 목록·검색·상세·위치 안내, 업체 로그인·소개 수정·상품 CRUD·사진 업로드를 제공한다.
+구체적인 설계는 [구현 계획](docs/implementation-plan.md), 계정 발급·DB 관리·배포 방법은 [운영 안내](docs/operations.md)에 기록한다.
 
 Supabase 프로젝트 `sgxnccckhweykhautotb`의 Free 상태를 확인하고 CLI 연결을 완료했다.
-공개 키로 Auth 설정 API의 HTTP 200 응답을 확인했다. 테이블·권한·업체 로그인은 구현 단계에서 적용한다.
-`supabase/config.toml`은 로컬 개발용 설정이며 신규 가입·익명 로그인을 차단하도록 준비했다. 원격 Auth 설정에는 아직 적용하지 않았다.
+업체 2계정으로 실제 저장·공개 및 다른 업체의 접근 차단을 검증했다.
+원격 신규 가입·익명 로그인을 차단했고 발급된 계정의 비밀번호 로그인은 허용한다.
+`supabase/config.toml`은 로컬 개발용, `ops/supabase/config.toml`은 원격 Auth 변경용이다.
 실제 접속 키는 Git에서 제외하는 `.env.local`에 보관한다.
 환경변수의 이름과 형식은 `.env.example`을 참고한다.
 
@@ -30,7 +32,20 @@ GitHub 비공개 저장소: [yangjae-bridge-flea-market-2026](https://github.com
 운영 호스팅 기본안은 Cloudflare Pages Free다. 계정 연결과 배포는 아직 실행하지 않았다.
 기존 Vercel 프로젝트 연결 이후 Hobby의 상업용 제한을 확인하여 사용자 결정에 따라 무료 대안으로 변경했다.
 
-제공된 HEIC 원본을 보존하고 `public/sample-images`에 웹용 JPEG 전경·매대·목록용 썸네일을 준비했다.
+제공된 HEIC 원본을 보존하고 `public/sample-images`에 웹용 JPEG 전경·매대·썸네일 4개를 준비했다.
+
+## 개발
+
+Node.js 24와 npm을 사용한다. `.env.example`을 참고해 `.env.local`을 준비한다.
+
+```sh
+npm ci
+npm run dev
+npm run test
+npm run build
+```
+
+방문객은 `/`, 업체는 `/vendor/login`으로 접속한다. 화면 확인용 `sample01` 계정의 발급 파일은 Git에서 제외된 `.local/vendor-sample01.json`에 있다.
 
 ## 설정 파일 관리
 

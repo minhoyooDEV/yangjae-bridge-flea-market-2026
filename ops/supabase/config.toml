@@ -1,0 +1,10 @@
+# Remote configuration: only declared fields are pushed.
+project_id = "yangjae-bridge-flea-market-2026"
+
+[auth]
+enable_signup = false
+enable_anonymous_sign_ins = false
+
+[auth.email]
+# This controls the email/password provider. Global signup remains disabled.
+enable_signup = true
