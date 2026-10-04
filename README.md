@@ -16,6 +16,12 @@
 
 스타일은 `src/styles.css`의 디자인 시스템 클래스(`.section`, `.inverse`, `.display`, `.lede`, `.hint`, `.media`, `.button`, `.timeline`, `.carousel`, `.grid-2` 등)를 먼저 쓰고, 페이지 전용 `cm-*` 클래스는 공용 클래스로 표현할 수 없는 구성에만 쓴다.
 
+### 방문 분석 (PostHog)
+
+PostHog(US 클라우드)로 페이지뷰·웹 분석·세션 리플레이를 수집한다. 프로젝트 키는 `src/lib/analytics.ts`의 `POSTHOG_KEY`이며(공개 키라 번들에 넣어도 된다), 비어 있으면 분석이 꺼진다. 로컬 개발(`npm run dev`)은 이벤트를 보내지 않는다. 직접 보내는 이벤트: `product_viewed`(상품 상세 열기), `brand_film_played`, `series_opened`, `official_site_opened`(로고).
+
+제작자 방문 구분: 내 휴대폰·PC에서 주소 끝에 `?creator=on`을 붙여 한 번 열면 그 브라우저가 기억한다. 이후 그 브라우저의 모든 이벤트에 `is_creator=true`가 붙고 세션 리플레이는 녹화하지 않으며, 헤더에 "제작자 모드" 표시가 보인다. 표시를 누르거나 `?creator=off`로 열면 해제된다. 브라우저 저장소를 지우면 다시 켜야 한다. PostHog에서 Settings → Project → Product analytics → "Filter out internal and test users"에 이벤트 속성 `is_creator` = `true`를 추가하면 인사이트·웹 분석에서 제작자 방문을 뺄 수 있다.
+
 GitHub Pages에 배포하며 Secrets나 환경변수는 필요 없다. `.github/workflows/pages.yml`이 main push 시 테스트·빌드·배포한다. Settings → Pages → Source를 GitHub Actions로 설정한다. 비공개 저장소는 Pages 지원 요금제가 필요하며 저장소 공개 여부는 자동 변경하지 않는다.
 
 ## 개발

@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { ExternalLink, MapPin, Play, X } from "lucide-react";
 import { Empty, Photo } from "../components";
 import { booth, brand, products, type MarketProduct } from "../data/market";
+import { track } from "../lib/analytics";
 import { groupByCategory } from "../lib/products";
 import { imageUrl } from "../lib/public-image";
 import { formatPrice } from "../lib/validation";
@@ -56,6 +57,12 @@ export function BetaBooth() {
                     onClick={(event) => {
                       opener.current = event.currentTarget;
                       setSelected(product);
+                      track("product_viewed", {
+                        product_id: product.id,
+                        product_name: product.name,
+                        category: product.category,
+                        price: product.price,
+                      });
                     }}
                   >
                     <Photo
@@ -160,6 +167,7 @@ export function BetaBooth() {
         <a
           className="cm-series"
           href={brand.series.url}
+          onClick={() => track("series_opened")}
           target="_blank"
           rel="noreferrer"
           aria-label="Tom Hunt 공식 요리 영상 시리즈 보기 (새 창)"
@@ -234,7 +242,10 @@ function BrandFilm() {
   return (
     <button
       className="media wide cm-film"
-      onClick={() => setPlaying(true)}
+      onClick={() => {
+        setPlaying(true);
+        track("brand_film_played");
+      }}
       aria-label={`${title} 영상 재생`}
     >
       <img src={imageUrl(poster_path)} alt="" loading="lazy" decoding="async" />

@@ -2,6 +2,7 @@ import { useEffect, useRef, useState, type ReactNode } from "react";
 import { Link } from "react-router-dom";
 import { ArrowLeft, ImageOff, Store, X } from "lucide-react";
 import { brand } from "./data/market";
+import { isCreator, track } from "./lib/analytics";
 import { imageUrl } from "./lib/public-image";
 
 export function Brand() {
@@ -9,6 +10,7 @@ export function Brand() {
     <a
       className="brand"
       href={brand.website}
+      onClick={() => track("official_site_opened")}
       target="_blank"
       rel="noreferrer"
       aria-label="콜앤메이슨 공식 홈페이지 (새 창)"
@@ -37,6 +39,15 @@ export function Layout({ children }: { children: ReactNode }) {
       </a>
       <header className="site-header">
         <Brand />
+        {isCreator && (
+          <a
+            className="creator-badge"
+            href="?creator=off"
+            title="내 방문은 분석에서 제작자로 구분돼요. 누르면 해제해요."
+          >
+            제작자 모드
+          </a>
+        )}
       </header>
       <main id="main" tabIndex={-1}>
         {children}
