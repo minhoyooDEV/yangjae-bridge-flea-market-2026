@@ -1537,6 +1537,28 @@ textarea:disabled {
   overflow-y: auto;
   overflow-wrap: anywhere;
 }
+/* Dialog motion (src/lib/dialog-motion.ts). The photo animates outside the
+   dialog box while it grows, so clipping is lifted for that moment. */
+.product-dialog.is-expanding,
+.product-dialog.is-expanding .carousel,
+.photo-dialog.is-expanding {
+  overflow: visible;
+}
+.product-dialog::backdrop,
+.photo-dialog::backdrop {
+  transition: opacity 0.42s cubic-bezier(0.22, 1, 0.36, 1);
+}
+@starting-style {
+  .product-dialog[open]::backdrop,
+  .photo-dialog[open]::backdrop {
+    opacity: 0;
+  }
+}
+.product-dialog.is-closing::backdrop,
+.photo-dialog.is-closing::backdrop {
+  opacity: 0;
+  transition-duration: 0.22s;
+}
 .product-dialog::backdrop {
   background: #173c35d1;
 }

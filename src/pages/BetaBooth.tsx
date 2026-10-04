@@ -3,6 +3,7 @@ import { ExternalLink, MapPin, Play, X } from "lucide-react";
 import { Empty, Photo } from "../components";
 import { booth, brand, products, type MarketProduct } from "../data/market";
 import { track } from "../lib/analytics";
+import { closeWithMotion, expandOpen } from "../lib/dialog-motion";
 import { groupByCategory } from "../lib/products";
 import { imageUrl } from "../lib/public-image";
 import { formatPrice } from "../lib/validation";
@@ -14,7 +15,11 @@ export function BetaBooth() {
 
   useEffect(() => {
     if (!selected) return;
-    dialog.current?.showModal();
+    const element = dialog.current;
+    if (element) {
+      element.showModal();
+      openProductDialog(element, opener.current);
+    }
     const previous = document.body.style.overflow;
     document.body.style.overflow = "hidden";
     return () => {
@@ -200,15 +205,19 @@ export function BetaBooth() {
                 event.clientY < box.top ||
                 event.clientY > box.bottom
               )
-                dialog.current?.close();
+                closeWithMotion(dialog.current);
             }
+          }}
+          onCancel={(event) => {
+            event.preventDefault();
+            closeWithMotion(dialog.current);
           }}
         >
           <button
             className="icon-button product-dialog-close"
             aria-label="상품 상세 닫기"
             autoFocus
-            onClick={() => dialog.current?.close()}
+            onClick={() => closeWithMotion(dialog.current)}
           >
             <X />
           </button>
@@ -290,4 +299,17 @@ function ProductPhotos({ product }: { product: MarketProduct }) {
       </p>
     </>
   );
+}
+
+// The tapped card photo grows into the dialog's first photo.
+function openProductDialog(dialog: HTMLDialogElement, card: Element | null) {
+  const target = dialog.querySelector<HTMLElement>(
+    ".product-dialog-photo, .carousel > li:first-child > .media",
+  );
+  const carousel = target?.closest(".carousel");
+  const content = [...dialog.children].filter(
+    (child) => !target || !child.contains(target),
+  );
+  const late = carousel ? [...carousel.children].slice(1) : [];
+  expandOpen(dialog, card?.querySelector(".media"), target, content, late);
 }

@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { ArrowLeft, ImageOff, Store, X } from "lucide-react";
 import { brand } from "./data/market";
 import { isCreator, track } from "./lib/analytics";
+import { closeWithMotion, expandOpen } from "./lib/dialog-motion";
 import { imageUrl } from "./lib/public-image";
 
 export function Brand() {
@@ -150,7 +151,18 @@ export function Photo({
     <>
       <button
         className={`photo photo-button ${className}`}
-        onClick={() => dialog.current?.showModal()}
+        onClick={(event) => {
+          const element = dialog.current;
+          if (!element) return;
+          element.showModal();
+          const close = element.querySelector(".photo-close");
+          expandOpen(
+            element,
+            event.currentTarget,
+            element.querySelector("img"),
+            close ? [close] : [],
+          );
+        }}
         aria-label={`${alt} 크게 보기`}
       >
         {picture}
@@ -161,12 +173,17 @@ export function Photo({
         className="photo-dialog"
         aria-label={`${alt} 크게 보기`}
         onClick={(event) => {
-          if (event.target === event.currentTarget) dialog.current?.close();
+          if (event.target === event.currentTarget)
+            closeWithMotion(dialog.current);
+        }}
+        onCancel={(event) => {
+          event.preventDefault();
+          closeWithMotion(dialog.current);
         }}
       >
         <button
           className="icon-button photo-close"
-          onClick={() => dialog.current?.close()}
+          onClick={() => closeWithMotion(dialog.current)}
           aria-label="사진 닫기"
         >
           <X />
