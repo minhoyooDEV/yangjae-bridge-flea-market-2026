@@ -1239,6 +1239,16 @@ textarea:disabled {
 .product-dialog .price-list {
   margin: 16px 0 20px;
 }
+.product-group + .product-group {
+  margin-top: 36px;
+}
+.product-group > h3 {
+  margin-bottom: 14px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid #000;
+  font-size: 15px;
+  font-weight: 700;
+}
 .list-plain {
   list-style: none;
   margin: 0;
@@ -1335,19 +1345,12 @@ textarea:disabled {
   height: 100%;
   object-fit: cover;
   object-position: 18% 30%;
-  animation: cm-reveal 1.6s ease-out both;
 }
 .cm-hero::after {
   content: "";
   position: absolute;
   inset: 0;
   background: linear-gradient(180deg, #0000 22%, #000000d9 64%, #000 100%);
-}
-@keyframes cm-reveal {
-  from {
-    opacity: 0;
-    transform: scale(1.06);
-  }
 }
 .cm-hero-copy {
   position: relative;
@@ -1373,6 +1376,10 @@ textarea:disabled {
   flex-wrap: wrap;
   gap: 8px;
   margin-top: 24px;
+}
+.cm-booth .cm-actions {
+  margin: 0;
+  padding: 16px 22px 0;
 }
 .cm-film {
   position: relative;
@@ -1448,11 +1455,6 @@ textarea:disabled {
   margin-top: 48px;
   padding-bottom: 40px;
 }
-.cm-location > .media {
-  grid-column: 1 / -1;
-  width: calc(100% + 44px);
-  margin: -44px -22px 8px;
-}
 .cm-location-number {
   font-family: var(--latin);
   font-size: 76px;
@@ -1486,16 +1488,13 @@ textarea:disabled {
     font-size: 33px;
   }
   .section,
-  .cm-hero-copy {
+  .cm-hero-copy,
+  .cm-booth .cm-actions {
     padding-left: 16px;
     padding-right: 16px;
   }
   .cm-location-number {
     font-size: 58px;
-  }
-  .cm-location > .media {
-    width: calc(100% + 32px);
-    margin: -44px -16px 8px;
   }
 }
 .product-dialog {

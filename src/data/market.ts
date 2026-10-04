@@ -3,6 +3,8 @@
 export interface MarketProduct {
   id: string;
   name: string;
+  // 종류. 같은 종류끼리 묶어 보여준다.
+  category: string;
   price: number | null;
   description: string;
   image_path: string | null;
@@ -56,6 +58,7 @@ export const products: MarketProduct[] = [
   {
     id: "cambourne-dressing-shaker",
     name: "캠번 샐러드 드레싱 쉐이커",
+    category: "주방 도구",
     price: 15000,
     description:
       "오일, 식초, 허브를 넣고 흔들기만 하면 드레싱이 완성돼요.\n뚜껑 전체를 열어 재료를 넣고, 위쪽 작은 입구로 따라요. 최대 300ml까지 눈금이 있어 레시피대로 맞추기 쉽고, 안쪽 블렌딩 디스크가 골고루 섞어 줘요.",
@@ -68,6 +71,7 @@ export const products: MarketProduct[] = [
   {
     id: "derwent-salt-pepper-brown",
     name: "더웬트 소금·후추 그라인더 세트 브라운",
+    category: "소금·후추 그라인더",
     price: 78000,
     description:
       "콜앤메이슨 베스트셀러 더웬트의 소금·후추 그라인더 한 쌍이에요. 짙은 나무와 코퍼 링이 어우러진 브라운 색상으로, 선물 상자에 담겨 있어요.\nPrecision+ 분쇄 메커니즘으로 후추 향을 잘 살리고, 굵기를 굵게부터 곱게까지 조절해요. 윗부분을 쏙 빼서 쉽게 채울 수 있어요.",
@@ -80,6 +84,7 @@ export const products: MarketProduct[] = [
   {
     id: "derwent-salt-pepper-dark",
     name: "더웬트 소금·후추 그라인더 세트 다크",
+    category: "소금·후추 그라인더",
     price: 78000,
     description:
       "콜앤메이슨 베스트셀러 더웬트의 소금·후추 그라인더 한 쌍이에요. 짙은 나무와 스테인리스 링이 어우러진 다크 색상으로, 선물 상자에 담겨 있어요.\nPrecision+ 분쇄 메커니즘으로 후추 향을 잘 살리고, 굵기를 굵게부터 곱게까지 조절해요. 윗부분을 쏙 빼서 쉽게 채울 수 있어요.",
@@ -92,6 +97,7 @@ export const products: MarketProduct[] = [
   {
     id: "barkway-acacia-board",
     name: "바크웨이 아카시아 나무 도마",
+    category: "주방 도구",
     price: 15000,
     options: [
       { label: "소", price: 15000 },
@@ -106,6 +112,7 @@ export const products: MarketProduct[] = [
   {
     id: "tealby-cut-herb-keeper",
     name: "틸비 컷 허브 키퍼",
+    category: "허브 키퍼",
     price: 20000,
     description:
       "자른 허브와 채소를 싱싱하게 보관하는 키퍼예요. 받침에 물을 채워 냉장고에 넣어 두면 더 오래 신선해요.\n일반 냉장고 문칸에 쏙 들어가고, 칸막이가 있어 여러 허브를 나눠 담을 수 있어요.",
@@ -118,6 +125,7 @@ export const products: MarketProduct[] = [
   {
     id: "burwell-herb-keeper-triple",
     name: "버웰 셀프워터링 허브 키퍼 3구",
+    category: "허브 키퍼",
     price: 20000,
     description:
       "허브 화분 세 개를 나란히 키우는 셀프워터링 키퍼예요. 펠트 패드가 물을 끌어올려 허브가 마르지 않게 지켜 줘요.\n물을 너무 많이 주거나 적게 주는 걸 막아 주고, 동그란 화분이든 네모난 화분이든 그대로 넣으면 돼서 옮겨 심을 필요가 없어요.",
@@ -130,6 +138,7 @@ export const products: MarketProduct[] = [
   {
     id: "burwell-herb-keeper-single",
     name: "버웰 셀프워터링 허브 키퍼 1구",
+    category: "허브 키퍼",
     price: 10000,
     description:
       "허브 화분 하나를 키우는 셀프워터링 키퍼예요. 펠트 패드가 물을 끌어올려 허브가 마르지 않게 지켜 줘요.\n물을 너무 많이 주거나 적게 주는 걸 막아 주고, 동그란 화분이든 네모난 화분이든 그대로 넣으면 돼서 옮겨 심을 필요가 없어요.",

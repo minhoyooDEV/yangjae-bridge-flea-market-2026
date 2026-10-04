@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { ExternalLink, MapPin, Play, X } from "lucide-react";
 import { Empty, Photo } from "../components";
 import { booth, brand, products, type MarketProduct } from "../data/market";
+import { groupByCategory, lowestPrice } from "../lib/products";
 import { imageUrl } from "../lib/public-image";
 import { formatPrice } from "../lib/validation";
 
@@ -23,28 +24,24 @@ export function BetaBooth() {
 
   return (
     <div className="cm-page">
-      <section className="cm-hero inverse" aria-labelledby="hero-title">
-        <img
-          className="cm-hero-image"
-          src={imageUrl(brand.hero_path)}
-          alt=""
-          fetchPriority="high"
-        />
-        <div className="cm-hero-copy">
-          <h1 id="hero-title" className="display" lang="en">
-            {brand.tagline}
-          </h1>
-          <p className="lede">{brand.intro}</p>
-          <div className="cm-actions">
-            <a className="button light" href="#brand-film">
-              <Play size={16} aria-hidden="true" />
-              브랜드 영상 보기
-            </a>
-            <a className="button outline" href="#booth-location">
-              <MapPin size={16} aria-hidden="true" />
-              매대 위치 보기
-            </a>
-          </div>
+      <section className="cm-booth" aria-labelledby="page-title">
+        <h1 id="page-title" className="sr-only">
+          {booth.market_name} {booth.name} 매대
+        </h1>
+        {booth.image_path && (
+          <Photo
+            path={booth.image_path}
+            alt={`${booth.market_name} ${booth.name} 매대 전경`}
+            className="media landscape"
+            eager
+            zoom
+          />
+        )}
+        <div className="cm-actions">
+          <a className="button primary" href="#brand-film">
+            <Play size={16} aria-hidden="true" />
+            브랜드 영상 보기
+          </a>
         </div>
       </section>
       {booth.is_sample && (
@@ -53,28 +50,33 @@ export function BetaBooth() {
       <section className="section" aria-labelledby="products-title">
         <h2 id="products-title">플리마켓 기획상품</h2>
         <p className="hint">물건을 누르면 자세한 설명이 열려요.</p>
-        <ul className="list-plain grid-2">
-          {products.map((product) => (
-            <li key={product.id}>
-              <button
-                className="cm-product"
-                aria-haspopup="dialog"
-                onClick={(event) => {
-                  opener.current = event.currentTarget;
-                  setSelected(product);
-                }}
-              >
-                <Photo
-                  path={product.image_path}
-                  alt=""
-                  className="media square"
-                />
-                <span>{product.name}</span>
-                <strong className="price">{listPrice(product)}</strong>
-              </button>
-            </li>
-          ))}
-        </ul>
+        {groupByCategory(products).map((group) => (
+          <div key={group.category} className="product-group">
+            <h3>{group.category}</h3>
+            <ul className="list-plain grid-2">
+              {group.products.map((product) => (
+                <li key={product.id}>
+                  <button
+                    className="cm-product"
+                    aria-haspopup="dialog"
+                    onClick={(event) => {
+                      opener.current = event.currentTarget;
+                      setSelected(product);
+                    }}
+                  >
+                    <Photo
+                      path={product.image_path}
+                      alt=""
+                      className="media square"
+                    />
+                    <span>{product.name}</span>
+                    <strong className="price">{listPrice(product)}</strong>
+                  </button>
+                </li>
+              ))}
+            </ul>
+          </div>
+        ))}
         {!products.length && (
           <Empty title="물건을 준비하고 있어요">
             상품과 가격이 등록되면 여기에 보여요.
@@ -119,14 +121,6 @@ export function BetaBooth() {
         className="section inverse cm-location"
         aria-labelledby="location-title"
       >
-        {booth.image_path && (
-          <Photo
-            path={booth.image_path}
-            alt={`${booth.market_name} ${booth.name} 매대 사진`}
-            className="media landscape"
-            zoom
-          />
-        )}
         <p className="cm-location-number">
           <span className="sr-only">매대 </span>
           {booth.booth_number}
@@ -138,6 +132,21 @@ export function BetaBooth() {
             {booth.location_text}
           </p>
           <p className="lede">{booth.description}</p>
+        </div>
+      </section>
+      <section className="cm-hero inverse" aria-labelledby="hero-title">
+        <img
+          className="cm-hero-image"
+          src={imageUrl(brand.hero_path)}
+          alt=""
+          loading="lazy"
+          decoding="async"
+        />
+        <div className="cm-hero-copy">
+          <h2 id="hero-title" className="display" lang="en">
+            {brand.tagline}
+          </h2>
+          <p className="lede">{brand.intro}</p>
         </div>
       </section>
       {selected && (
@@ -260,6 +269,5 @@ function ProductPhotos({ product }: { product: MarketProduct }) {
 
 function listPrice(product: MarketProduct) {
   if (!product.options?.length) return formatPrice(product.price);
-  const lowest = Math.min(...product.options.map((option) => option.price));
-  return `${formatPrice(lowest)}부터`;
+  return `${formatPrice(lowestPrice(product))}부터`;
 }
