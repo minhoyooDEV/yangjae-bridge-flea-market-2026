@@ -1371,16 +1371,6 @@ textarea:disabled {
   font-size: 12px;
   color: var(--steel);
 }
-.cm-actions {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-  margin-top: 24px;
-}
-.cm-booth .cm-actions {
-  margin: 0;
-  padding: 16px 22px 0;
-}
 .cm-film {
   position: relative;
   display: block;
@@ -1488,8 +1478,7 @@ textarea:disabled {
     font-size: 33px;
   }
   .section,
-  .cm-hero-copy,
-  .cm-booth .cm-actions {
+  .cm-hero-copy {
     padding-left: 16px;
     padding-right: 16px;
   }

@@ -37,12 +37,6 @@ export function BetaBooth() {
             zoom
           />
         )}
-        <div className="cm-actions">
-          <a className="button primary" href="#brand-film">
-            <Play size={16} aria-hidden="true" />
-            브랜드 영상 보기
-          </a>
-        </div>
       </section>
       {booth.is_sample && (
         <p className="sample-note">미리보기 · 상품과 가격은 예시예요.</p>
@@ -83,39 +77,6 @@ export function BetaBooth() {
           </Empty>
         )}
       </section>
-      <section id="brand-film" className="section" aria-labelledby="film-title">
-        <h2 id="film-title">영상으로 먼저 만나보세요</h2>
-        <BrandFilm />
-        <a
-          className="text-button"
-          href={`https://www.youtube.com/watch?v=${brand.video.youtube_id}`}
-          target="_blank"
-          rel="noreferrer"
-        >
-          유튜브에서 보기
-          <ExternalLink size={14} aria-hidden="true" />
-        </a>
-      </section>
-      <section className="section" aria-labelledby="story-title">
-        <h2 id="story-title">1919년 런던에서 시작했어요</h2>
-        <p className="lede">
-          소금과 후추를 가는 도구 하나로 100년을 넘겼어요. 세계 최초의 아크릴
-          그라인더, 소금·후추 듀얼 그라인딩 특허 모두 콜앤메이슨에서 나왔어요.
-        </p>
-        <Photo
-          path={brand.heritage_path}
-          alt="1919년 무렵 런던 거리 사진 위에 놓인 Since 1919 표시"
-          className="media square cm-story-image"
-        />
-        <ol className="list-plain timeline">
-          {brand.story.map((item) => (
-            <li key={item.year}>
-              <span className="timeline-year">{item.year}</span>
-              <span>{item.text}</span>
-            </li>
-          ))}
-        </ol>
-      </section>
       <section
         id="booth-location"
         className="section inverse cm-location"
@@ -148,6 +109,39 @@ export function BetaBooth() {
           </h2>
           <p className="lede">{brand.intro}</p>
         </div>
+      </section>
+      <section className="section" aria-labelledby="story-title">
+        <h2 id="story-title">1919년 런던에서 시작했어요</h2>
+        <p className="lede">
+          소금과 후추를 가는 도구 하나로 100년을 넘겼어요. 세계 최초의 아크릴
+          그라인더, 소금·후추 듀얼 그라인딩 특허 모두 콜앤메이슨에서 나왔어요.
+        </p>
+        <Photo
+          path={brand.heritage_path}
+          alt="1919년 무렵 런던 거리 사진 위에 놓인 Since 1919 표시"
+          className="media square cm-story-image"
+        />
+        <ol className="list-plain timeline">
+          {brand.story.map((item) => (
+            <li key={item.year}>
+              <span className="timeline-year">{item.year}</span>
+              <span>{item.text}</span>
+            </li>
+          ))}
+        </ol>
+      </section>
+      <section id="brand-film" className="section" aria-labelledby="film-title">
+        <h2 id="film-title">영상으로 만나보세요</h2>
+        <BrandFilm />
+        <a
+          className="text-button"
+          href={`https://www.youtube.com/watch?v=${brand.video.youtube_id}`}
+          target="_blank"
+          rel="noreferrer"
+        >
+          유튜브에서 보기
+          <ExternalLink size={14} aria-hidden="true" />
+        </a>
       </section>
       {selected && (
         <dialog
