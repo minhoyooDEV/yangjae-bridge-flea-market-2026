@@ -6,6 +6,8 @@ export interface MarketProduct {
   price: number | null;
   description: string;
   image_path: string | null;
+  // 상세 창에서 대표 사진 뒤에 이어 보여줄 사진들
+  gallery?: string[];
 }
 
 export const brand = {
@@ -49,6 +51,18 @@ export const booth = {
 };
 
 export const products: MarketProduct[] = [
+  {
+    id: "cambourne-dressing-shaker",
+    name: "캠번 샐러드 드레싱 쉐이커",
+    price: 15000,
+    description:
+      "오일, 식초, 허브를 넣고 흔들기만 하면 드레싱이 완성돼요.\n뚜껑 전체를 열어 재료를 넣고, 위쪽 작은 입구로 따라요. 최대 300ml까지 눈금이 있어 레시피대로 맞추기 쉽고, 안쪽 블렌딩 디스크가 골고루 섞어 줘요.",
+    image_path: "/brand/products/dressing-shaker-01.jpg",
+    gallery: [
+      "/brand/products/dressing-shaker-03.jpg",
+      "/brand/products/dressing-shaker-02.jpg",
+    ],
+  },
   {
     id: "london-set-beech",
     name: "런던 소금·후추 그라인더 세트 내추럴 비치",

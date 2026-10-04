@@ -1251,6 +1251,23 @@ textarea:disabled {
 .media.wide {
   aspect-ratio: 16 / 9;
 }
+.media.portrait {
+  aspect-ratio: 3 / 4;
+}
+.carousel {
+  display: flex;
+  gap: 8px;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  overscroll-behavior-x: contain;
+}
+.carousel > li {
+  flex: 0 0 82%;
+  scroll-snap-align: start;
+}
+.product-dialog .carousel + .hint {
+  margin: 8px 0 20px;
+}
 .button.light {
   background: #fff;
   color: #000;

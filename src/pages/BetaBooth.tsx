@@ -174,13 +174,7 @@ export function BetaBooth() {
           >
             <X />
           </button>
-          {selected.image_path && (
-            <Photo
-              path={selected.image_path}
-              alt={selected.name}
-              className="product-dialog-photo"
-            />
-          )}
+          <ProductPhotos product={selected} />
           <h2 id="product-title">{selected.name}</h2>
           <p className="product-dialog-price">{formatPrice(selected.price)}</p>
           <p id="product-description">
@@ -218,5 +212,41 @@ function BrandFilm() {
         <Play size={26} fill="currentColor" />
       </span>
     </button>
+  );
+}
+
+function ProductPhotos({ product }: { product: MarketProduct }) {
+  const paths = [product.image_path, ...(product.gallery ?? [])].filter(
+    (path): path is string => Boolean(path),
+  );
+  if (!paths.length) return null;
+  if (paths.length === 1)
+    return (
+      <Photo
+        path={paths[0]}
+        alt={product.name}
+        className="product-dialog-photo"
+      />
+    );
+  return (
+    <>
+      <ul
+        className="list-plain carousel"
+        aria-label={`${product.name} 사진 ${paths.length}장`}
+      >
+        {paths.map((path, index) => (
+          <li key={path}>
+            <Photo
+              path={path}
+              alt={`${product.name} 사진 ${index + 1}/${paths.length}`}
+              className="media portrait"
+            />
+          </li>
+        ))}
+      </ul>
+      <p className="hint">
+        옆으로 넘기면 사진 {paths.length}장을 볼 수 있어요.
+      </p>
+    </>
   );
 }
