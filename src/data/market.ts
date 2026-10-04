@@ -10,8 +10,6 @@ export interface MarketProduct {
   image_path: string | null;
   // 상세 창에서 대표 사진 뒤에 이어 보여줄 사진들
   gallery?: string[];
-  // 사이즈 등 선택지별 가격. 있으면 price는 가장 낮은 가격으로 둔다.
-  options?: { label: string; price: number }[];
 }
 
 export const brand = {
@@ -95,19 +93,37 @@ export const products: MarketProduct[] = [
     ],
   },
   {
-    id: "barkway-acacia-board",
-    name: "아카시아 원목 도마",
+    id: "acacia-board-s",
+    name: "아카시아 원목 도마 소",
     category: "주방 도구",
     price: 15000,
-    options: [
-      { label: "소", price: 15000 },
-      { label: "중", price: 25000 },
-      { label: "대", price: 35000 },
-    ],
     description:
-      "결이 살아 있는 아카시아 원목 도마예요. 소·중·대 세 가지 크기가 있어요.\n손잡이가 있어 들고 옮기기 편하고, 겹쳐 두거나 세워 두거나 걸어서 보관할 수 있어요.",
-    image_path: "/brand/products/acacia-board-02.jpg",
-    gallery: ["/brand/products/acacia-board-01.jpg"],
+      "결이 살아 있는 아카시아 원목 도마예요. 소·중·대 세 가지 크기 중 소 사이즈예요.\n손잡이가 있어 들고 옮기기 편하고, 겹쳐 두거나 세워 두거나 걸어서 보관할 수 있어요.",
+    image_path: "/brand/products/acacia-board-s-01.jpg",
+    gallery: [
+      "/brand/products/acacia-board-s-02.jpg",
+      "/brand/products/acacia-board-all.jpg",
+    ],
+  },
+  {
+    id: "acacia-board-m",
+    name: "아카시아 원목 도마 중",
+    category: "주방 도구",
+    price: 25000,
+    description:
+      "결이 살아 있는 아카시아 원목 도마예요. 소·중·대 세 가지 크기 중 중 사이즈예요.\n손잡이가 있어 들고 옮기기 편하고, 겹쳐 두거나 세워 두거나 걸어서 보관할 수 있어요.",
+    image_path: "/brand/products/acacia-board-m-01.jpg",
+    gallery: ["/brand/products/acacia-board-all.jpg"],
+  },
+  {
+    id: "acacia-board-l",
+    name: "아카시아 원목 도마 대",
+    category: "주방 도구",
+    price: 35000,
+    description:
+      "결이 살아 있는 아카시아 원목 도마예요. 소·중·대 세 가지 크기 중 대 사이즈예요.\n손잡이가 있어 들고 옮기기 편하고, 겹쳐 두거나 세워 두거나 걸어서 보관할 수 있어요.",
+    image_path: "/brand/products/acacia-board-l-01.jpg",
+    gallery: ["/brand/products/acacia-board-all.jpg"],
   },
   {
     id: "tealby-cut-herb-keeper",

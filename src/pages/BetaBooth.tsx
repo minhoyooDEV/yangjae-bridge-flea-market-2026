@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { ExternalLink, MapPin, Play, X } from "lucide-react";
 import { Empty, Photo } from "../components";
 import { booth, brand, products, type MarketProduct } from "../data/market";
-import { groupByCategory, lowestPrice } from "../lib/products";
+import { groupByCategory } from "../lib/products";
 import { imageUrl } from "../lib/public-image";
 import { formatPrice } from "../lib/validation";
 
@@ -64,7 +64,9 @@ export function BetaBooth() {
                       className="media square"
                     />
                     <span>{product.name}</span>
-                    <strong className="price">{listPrice(product)}</strong>
+                    <strong className="price">
+                      {formatPrice(product.price)}
+                    </strong>
                   </button>
                 </li>
               ))}
@@ -82,10 +84,6 @@ export function BetaBooth() {
         className="section inverse cm-location"
         aria-labelledby="location-title"
       >
-        <p className="cm-location-number">
-          <span className="sr-only">매대 </span>
-          {booth.booth_number}
-        </p>
         <div>
           <h2 id="location-title">{booth.market_name}에서 만나요</h2>
           <p className="cm-location-place">
@@ -173,20 +171,7 @@ export function BetaBooth() {
           </button>
           <ProductPhotos product={selected} />
           <h2 id="product-title">{selected.name}</h2>
-          {selected.options?.length ? (
-            <ul className="list-plain price-list">
-              {selected.options.map((option) => (
-                <li key={option.label}>
-                  <span>{option.label}</span>
-                  <strong className="price">{formatPrice(option.price)}</strong>
-                </li>
-              ))}
-            </ul>
-          ) : (
-            <p className="product-dialog-price">
-              {formatPrice(selected.price)}
-            </p>
-          )}
+          <p className="product-dialog-price">{formatPrice(selected.price)}</p>
           <p id="product-description">
             {selected.description || "자세한 이야기는 매대에서 만나보세요."}
           </p>
@@ -259,9 +244,4 @@ function ProductPhotos({ product }: { product: MarketProduct }) {
       </p>
     </>
   );
-}
-
-function listPrice(product: MarketProduct) {
-  if (!product.options?.length) return formatPrice(product.price);
-  return `${formatPrice(lowestPrice(product))}부터`;
 }

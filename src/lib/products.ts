@@ -5,10 +5,8 @@ export interface ProductGroup {
   products: MarketProduct[];
 }
 
-// Lowest price a visitor can pay; products without a price sort last.
-export function lowestPrice(product: MarketProduct) {
-  if (product.options?.length)
-    return Math.min(...product.options.map((option) => option.price));
+// Products without a price sort last.
+export function sortPrice(product: MarketProduct) {
   return product.price ?? Number.POSITIVE_INFINITY;
 }
 
@@ -24,7 +22,7 @@ export function groupByCategory(products: MarketProduct[]): ProductGroup[] {
   return [...groups.entries()]
     .map(([category, items]) => ({
       category,
-      products: [...items].sort((a, b) => lowestPrice(a) - lowestPrice(b)),
+      products: [...items].sort((a, b) => sortPrice(a) - sortPrice(b)),
     }))
-    .sort((a, b) => lowestPrice(a.products[0]) - lowestPrice(b.products[0]));
+    .sort((a, b) => sortPrice(a.products[0]) - sortPrice(b.products[0]));
 }

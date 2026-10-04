@@ -1,35 +1,25 @@
 import { describe, expect, it } from "vitest";
 import type { MarketProduct } from "../data/market";
-import { groupByCategory, lowestPrice } from "./products";
+import { groupByCategory, sortPrice } from "./products";
 
 function product(
   id: string,
   category: string,
   price: number | null,
-  options?: MarketProduct["options"],
 ): MarketProduct {
   return {
     id,
     name: id,
     category,
     price,
-    options,
     description: "",
     image_path: null,
   };
 }
 
-describe("lowestPrice", () => {
-  it("uses the cheapest option when options exist", () => {
-    const board = product("board", "kitchen", 99000, [
-      { label: "대", price: 35000 },
-      { label: "소", price: 15000 },
-    ]);
-    expect(lowestPrice(board)).toBe(15000);
-  });
-
+describe("sortPrice", () => {
   it("sorts products without a price last", () => {
-    expect(lowestPrice(product("x", "a", null))).toBe(Number.POSITIVE_INFINITY);
+    expect(sortPrice(product("x", "a", null))).toBe(Number.POSITIVE_INFINITY);
   });
 });
 
