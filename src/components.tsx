@@ -6,14 +6,20 @@ import { imageUrl } from "./lib/public-image";
 
 export function Brand() {
   return (
-    <Link className="brand" to="/" aria-label="콜앤메이슨 매대 홈">
+    <a
+      className="brand"
+      href={brand.website}
+      target="_blank"
+      rel="noreferrer"
+      aria-label="콜앤메이슨 공식 홈페이지 (새 창)"
+    >
       <img
         src={imageUrl(brand.logo_path)}
         alt="Cole & Mason England"
         width="159"
         height="25"
       />
-    </Link>
+    </a>
   );
 }
 export function Layout({ children }: { children: ReactNode }) {

@@ -31,9 +31,6 @@ export function BetaBooth() {
           fetchPriority="high"
         />
         <div className="cm-hero-copy">
-          <p className="hint">
-            {booth.market_name} 매대 {booth.booth_number}
-          </p>
           <h1 id="hero-title" className="display" lang="en">
             {brand.tagline}
           </h1>
@@ -56,6 +53,37 @@ export function BetaBooth() {
           중이에요.
         </p>
       )}
+      <section className="section" aria-labelledby="products-title">
+        <h2 id="products-title">플리마켓 기획상품</h2>
+        <p className="hint">물건을 누르면 자세한 설명이 열려요.</p>
+        <ul className="list-plain grid-2">
+          {products.map((product) => (
+            <li key={product.id}>
+              <button
+                className="cm-product"
+                aria-haspopup="dialog"
+                onClick={(event) => {
+                  opener.current = event.currentTarget;
+                  setSelected(product);
+                }}
+              >
+                <Photo
+                  path={product.image_path}
+                  alt=""
+                  className="media square"
+                />
+                <span>{product.name}</span>
+                <strong className="price">{formatPrice(product.price)}</strong>
+              </button>
+            </li>
+          ))}
+        </ul>
+        {!products.length && (
+          <Empty title="물건을 준비하고 있어요">
+            상품과 가격이 등록되면 여기에 보여요.
+          </Empty>
+        )}
+      </section>
       <section id="brand-film" className="section" aria-labelledby="film-title">
         <h2 id="film-title">영상으로 먼저 만나보세요</h2>
         <BrandFilm />
@@ -88,37 +116,6 @@ export function BetaBooth() {
             </li>
           ))}
         </ol>
-      </section>
-      <section className="section" aria-labelledby="products-title">
-        <h2 id="products-title">플리마켓 기획상품</h2>
-        <p className="hint">물건을 누르면 자세한 설명이 열려요.</p>
-        <ul className="list-plain grid-2">
-          {products.map((product) => (
-            <li key={product.id}>
-              <button
-                className="cm-product"
-                aria-haspopup="dialog"
-                onClick={(event) => {
-                  opener.current = event.currentTarget;
-                  setSelected(product);
-                }}
-              >
-                <Photo
-                  path={product.image_path}
-                  alt=""
-                  className="media square"
-                />
-                <span>{product.name}</span>
-                <strong className="price">{formatPrice(product.price)}</strong>
-              </button>
-            </li>
-          ))}
-        </ul>
-        {!products.length && (
-          <Empty title="물건을 준비하고 있어요">
-            상품과 가격이 등록되면 여기에 보여요.
-          </Empty>
-        )}
       </section>
       <section
         id="booth-location"
