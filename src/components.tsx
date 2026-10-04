@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState, type ReactNode } from "react";
 import { Link } from "react-router-dom";
 import { ArrowLeft, ImageOff, Store, X } from "lucide-react";
-import { booth, brand } from "./data/market";
+import { brand } from "./data/market";
 import { imageUrl } from "./lib/public-image";
 
 export function Brand() {
@@ -35,12 +35,6 @@ export function Layout({ children }: { children: ReactNode }) {
       <main id="main" tabIndex={-1}>
         {children}
       </main>
-      <footer className="site-footer">
-        <p>콜앤메이슨 코리아는 {booth.market_name}에 참여해요.</p>
-        <a href={brand.website} target="_blank" rel="noreferrer">
-          공식몰 둘러보기
-        </a>
-      </footer>
     </div>
   );
 }

@@ -341,7 +341,7 @@ textarea:disabled {
   border-radius: 11px;
 }
 .photo {
-  background: #ececde;
+  background: #f4f4f2;
   overflow: hidden;
   position: relative;
   display: block;
@@ -576,7 +576,7 @@ textarea:disabled {
   position: absolute;
   bottom: 12px;
   right: 12px;
-  background: #213c31df;
+  background: #000000c7;
   color: #fff;
   border: 1px solid #ffffff52;
   border-radius: 16px;
@@ -734,17 +734,16 @@ textarea:disabled {
   align-items: center;
   justify-content: center;
   gap: 8px;
-  border-radius: 11px;
-  min-height: 49px;
+  border-radius: 2px;
+  min-height: 46px;
   padding: 12px 18px;
   font-size: 14px;
-  font-weight: 650;
+  font-weight: 500;
   line-height: 1.5;
 }
 .button.primary {
-  background: var(--green);
-  color: #fffdf6;
-  box-shadow: 0 2px 0 #173929;
+  background: #000;
+  color: #fff;
 }
 .button.secondary {
   background: #f9f7ef;
@@ -852,11 +851,13 @@ textarea:disabled {
   gap: 6px;
   align-items: center;
   justify-content: center;
-  font-size: 12px;
-  font-weight: 650;
+  font-size: 13px;
   padding: 8px 0;
   background: none;
   min-height: 40px;
+  color: var(--muted);
+  text-decoration: underline;
+  text-underline-offset: 3px;
 }
 .message .text-button {
   display: flex;
@@ -1106,6 +1107,14 @@ textarea:disabled {
   background: #fff;
   z-index: 200;
 }
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
 .skip-link:focus {
   top: 12px;
 }
@@ -1175,13 +1184,111 @@ textarea:disabled {
   }
 }
 
+/* Design system: reusable classes. Prefer these before page-specific ones. */
+.section {
+  padding: 44px 22px 8px;
+}
+.section > h2 {
+  font-size: 22px;
+  font-weight: 700;
+  letter-spacing: -0.6px;
+}
+.inverse {
+  background: #000;
+  color: #fff;
+}
+.latin {
+  font-family: var(--latin);
+}
+.display {
+  font-family: var(--latin);
+  font-weight: 300;
+  font-size: 40px;
+  line-height: 1.12;
+  letter-spacing: -0.5px;
+}
+.lede {
+  margin-top: 12px;
+  line-height: 1.8;
+  word-break: keep-all;
+}
+.hint {
+  margin: 8px 0 18px;
+  color: var(--muted);
+  font-size: 13px;
+}
+.price {
+  font-family: var(--latin);
+  font-size: 14px;
+  font-weight: 500;
+}
+.list-plain {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.grid-2 {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 26px 12px;
+}
+.media {
+  width: 100%;
+  overflow: hidden;
+  background: #f4f4f2;
+}
+.media > img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.media.square {
+  aspect-ratio: 1;
+}
+.media.landscape {
+  aspect-ratio: 4 / 3;
+}
+.media.wide {
+  aspect-ratio: 16 / 9;
+}
+.button.light {
+  background: #fff;
+  color: #000;
+}
+.button.outline {
+  border: 1px solid currentColor;
+  background: transparent;
+}
+.inverse .button:focus-visible {
+  outline-color: #fff;
+}
+.timeline > li {
+  display: grid;
+  grid-template-columns: 76px minmax(0, 1fr);
+  align-items: baseline;
+  gap: 8px;
+  padding: 13px 0;
+  border-bottom: 1px solid var(--line);
+  font-size: 14px;
+}
+.timeline-year {
+  font-family: var(--latin);
+  font-size: 22px;
+  font-weight: 300;
+  letter-spacing: -0.3px;
+  font-variant-numeric: tabular-nums;
+}
+.timeline > li:first-child .timeline-year,
+.timeline > li:last-child .timeline-year {
+  font-weight: 500;
+}
+
+/* Page: Cole & Mason booth. Only compositions the design system lacks. */
 .cm-hero {
   position: relative;
   min-height: 560px;
   display: flex;
   align-items: flex-end;
-  background: #000;
-  color: #fff;
   overflow: hidden;
 }
 .cm-hero-image {
@@ -1210,87 +1317,41 @@ textarea:disabled {
   z-index: 1;
   padding: 0 22px 32px;
 }
-.cm-hero-market {
-  font-size: 12px;
-  color: var(--steel);
-}
-.cm-hero h1 {
+.cm-hero-copy .display {
   margin-top: 10px;
-  font-family: var(--latin);
-  font-weight: 300;
-  font-size: 40px;
-  line-height: 1.12;
-  letter-spacing: -0.5px;
 }
-.cm-hero-lede {
+.cm-hero-copy .lede {
   margin-top: 16px;
   font-size: 14px;
   line-height: 1.75;
   color: #e6e6e3;
-  word-break: keep-all;
 }
-.cm-hero-actions {
+.cm-hero-copy .hint {
+  margin: 0;
+  font-size: 12px;
+  color: var(--steel);
+}
+.cm-actions {
   display: flex;
   flex-wrap: wrap;
   gap: 8px;
   margin-top: 24px;
 }
-.cm-button {
-  display: inline-flex;
-  align-items: center;
-  gap: 7px;
-  min-height: 46px;
-  padding: 0 18px;
-  border-radius: 2px;
-  font-size: 14px;
-  font-weight: 500;
-}
-.cm-button-light {
-  background: #fff;
-  color: #000;
-}
-.cm-button-ghost {
-  border: 1px solid #ffffff8c;
-  color: #fff;
-}
-.cm-button:focus-visible {
-  outline-color: #fff;
-}
-.cm-sample-note {
-  margin: 0;
-  padding: 12px 22px;
-  background: #f4f4f2;
-  color: var(--muted);
-}
-.cm-section {
-  padding: 44px 22px 8px;
-}
-.cm-section h2 {
-  font-size: 22px;
-  font-weight: 700;
-  letter-spacing: -0.6px;
-}
-.cm-film-frame {
+.cm-film {
   position: relative;
   display: block;
-  width: 100%;
-  aspect-ratio: 16 / 9;
   margin-top: 18px;
   padding: 0;
   background: #000;
-  overflow: hidden;
 }
-.cm-film-frame iframe {
+.cm-film iframe {
   position: absolute;
   inset: 0;
   width: 100%;
   height: 100%;
   border: 0;
 }
-.cm-film-poster img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
+.cm-film > img {
   opacity: 0.86;
 }
 .cm-film-play {
@@ -1309,69 +1370,16 @@ textarea:disabled {
   box-shadow: 0 0 0 8px #ffffff40;
   transition: transform 0.2s ease;
 }
-.cm-film-poster:hover .cm-film-play {
+.cm-film:hover .cm-film-play {
   transform: scale(1.06);
 }
-.cm-text-link {
-  display: inline-flex;
-  align-items: center;
-  gap: 5px;
-  margin-top: 12px;
-  font-size: 13px;
-  color: var(--muted);
-  text-decoration: underline;
-  text-underline-offset: 3px;
-}
-.cm-story-lede {
-  margin-top: 12px;
-  color: #333;
-  line-height: 1.8;
-  word-break: keep-all;
+.cm-page > .sample-note {
+  margin: 0;
+  padding: 12px 22px;
+  background: #f4f4f2;
 }
 .cm-story-image {
-  width: 100%;
-  aspect-ratio: 1;
-  object-fit: cover;
   margin: 22px 0 8px;
-  filter: grayscale(0.15);
-}
-.cm-timeline {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-}
-.cm-timeline li {
-  display: grid;
-  grid-template-columns: 76px minmax(0, 1fr);
-  align-items: baseline;
-  gap: 8px;
-  padding: 13px 0;
-  border-bottom: 1px solid var(--line);
-  font-size: 14px;
-}
-.cm-year {
-  font-family: var(--latin);
-  font-size: 22px;
-  font-weight: 300;
-  letter-spacing: -0.3px;
-  font-variant-numeric: tabular-nums;
-}
-.cm-timeline li:first-child .cm-year,
-.cm-timeline li:last-child .cm-year {
-  font-weight: 500;
-}
-.cm-hint {
-  margin: 8px 0 18px;
-  color: var(--muted);
-  font-size: 13px;
-}
-.cm-product-grid {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 26px 12px;
 }
 .cm-product {
   width: 100%;
@@ -1381,42 +1389,32 @@ textarea:disabled {
   gap: 6px;
   text-align: left;
   background: transparent;
-}
-.cm-product-photo {
-  width: 100%;
-  aspect-ratio: 1;
-  margin-bottom: 6px;
-  background: #f4f4f2;
-}
-.cm-product-photo img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  transition: transform 0.3s ease;
-}
-.cm-product:hover .cm-product-photo img {
-  transform: scale(1.03);
-}
-.cm-product-name {
   font-size: 13px;
   line-height: 1.5;
   word-break: keep-all;
   overflow-wrap: anywhere;
 }
-.cm-product strong {
-  font-family: var(--latin);
-  font-size: 14px;
-  font-weight: 500;
+.cm-product .media {
+  margin-bottom: 6px;
+}
+.cm-product .media > img {
+  transition: transform 0.3s ease;
+}
+.cm-product:hover .media > img {
+  transform: scale(1.03);
 }
 .cm-location {
   display: grid;
   grid-template-columns: auto minmax(0, 1fr);
   gap: 18px;
   align-items: start;
-  margin: 48px 0 0;
-  padding: 36px 22px 40px;
-  background: #000;
-  color: #fff;
+  margin-top: 48px;
+  padding-bottom: 40px;
+}
+.cm-location > .media {
+  grid-column: 1 / -1;
+  width: calc(100% + 44px);
+  margin: -44px -22px 8px;
 }
 .cm-location-number {
   font-family: var(--latin);
@@ -1440,25 +1438,27 @@ textarea:disabled {
 .cm-location-place svg {
   margin-top: 2px;
 }
-.cm-location-note {
+.cm-location .lede {
   margin-top: 14px;
   color: #c9c9c6;
   font-size: 13px;
   line-height: 1.75;
-  word-break: keep-all;
 }
 @media (max-width: 359px) {
-  .cm-hero h1 {
+  .display {
     font-size: 33px;
   }
-  .cm-hero-copy,
-  .cm-section,
-  .cm-location {
+  .section,
+  .cm-hero-copy {
     padding-left: 16px;
     padding-right: 16px;
   }
   .cm-location-number {
     font-size: 58px;
+  }
+  .cm-location > .media {
+    width: calc(100% + 32px);
+    margin: -44px -16px 8px;
   }
 }
 .product-dialog {

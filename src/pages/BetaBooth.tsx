@@ -23,7 +23,7 @@ export function BetaBooth() {
 
   return (
     <div className="cm-page">
-      <section className="cm-hero" aria-labelledby="hero-title">
+      <section className="cm-hero inverse" aria-labelledby="hero-title">
         <img
           className="cm-hero-image"
           src={imageUrl(brand.hero_path)}
@@ -31,19 +31,19 @@ export function BetaBooth() {
           fetchPriority="high"
         />
         <div className="cm-hero-copy">
-          <p className="cm-hero-market">
+          <p className="hint">
             {booth.market_name} 매대 {booth.booth_number}
           </p>
-          <h1 id="hero-title" lang="en">
+          <h1 id="hero-title" className="display" lang="en">
             {brand.tagline}
           </h1>
-          <p className="cm-hero-lede">{brand.intro}</p>
-          <div className="cm-hero-actions">
-            <a className="cm-button cm-button-light" href="#brand-film">
+          <p className="lede">{brand.intro}</p>
+          <div className="cm-actions">
+            <a className="button light" href="#brand-film">
               <Play size={16} aria-hidden="true" />
               브랜드 영상 보기
             </a>
-            <a className="cm-button cm-button-ghost" href="#booth-location">
+            <a className="button outline" href="#booth-location">
               <MapPin size={16} aria-hidden="true" />
               매대 위치 보기
             </a>
@@ -51,20 +51,16 @@ export function BetaBooth() {
         </div>
       </section>
       {booth.is_sample && (
-        <p className="sample-note cm-sample-note">
+        <p className="sample-note">
           미리보기 · 상품과 가격은 공식몰 기준 예시이며 현장 판매 정보는 준비
           중이에요.
         </p>
       )}
-      <section
-        id="brand-film"
-        className="cm-section cm-film"
-        aria-labelledby="film-title"
-      >
+      <section id="brand-film" className="section" aria-labelledby="film-title">
         <h2 id="film-title">영상으로 먼저 만나보세요</h2>
         <BrandFilm />
         <a
-          className="cm-text-link"
+          className="text-button"
           href={`https://www.youtube.com/watch?v=${brand.video.youtube_id}`}
           target="_blank"
           rel="noreferrer"
@@ -73,35 +69,30 @@ export function BetaBooth() {
           <ExternalLink size={14} aria-hidden="true" />
         </a>
       </section>
-      <section className="cm-section cm-story" aria-labelledby="story-title">
+      <section className="section" aria-labelledby="story-title">
         <h2 id="story-title">1919년 런던에서 시작했어요</h2>
-        <p className="cm-story-lede">
+        <p className="lede">
           소금과 후추를 가는 도구 하나로 100년을 넘겼어요. 세계 최초의 아크릴
           그라인더, 소금·후추 듀얼 그라인딩 특허 모두 콜앤메이슨에서 나왔어요.
         </p>
-        <img
-          className="cm-story-image"
-          src={imageUrl(brand.heritage_path)}
+        <Photo
+          path={brand.heritage_path}
           alt="1919년 무렵 런던 거리 사진 위에 놓인 Since 1919 표시"
-          loading="lazy"
-          decoding="async"
+          className="media square cm-story-image"
         />
-        <ol className="cm-timeline">
+        <ol className="list-plain timeline">
           {brand.story.map((item) => (
             <li key={item.year}>
-              <span className="cm-year">{item.year}</span>
+              <span className="timeline-year">{item.year}</span>
               <span>{item.text}</span>
             </li>
           ))}
         </ol>
       </section>
-      <section
-        className="cm-section cm-products"
-        aria-labelledby="products-title"
-      >
+      <section className="section" aria-labelledby="products-title">
         <h2 id="products-title">매대에서 만나는 그라인더</h2>
-        <p className="cm-hint">물건을 누르면 자세한 설명이 열려요.</p>
-        <ul className="cm-product-grid">
+        <p className="hint">물건을 누르면 자세한 설명이 열려요.</p>
+        <ul className="list-plain grid-2">
           {products.map((product) => (
             <li key={product.id}>
               <button
@@ -115,10 +106,10 @@ export function BetaBooth() {
                 <Photo
                   path={product.image_path}
                   alt=""
-                  className="cm-product-photo"
+                  className="media square"
                 />
-                <span className="cm-product-name">{product.name}</span>
-                <strong>{formatPrice(product.price)}</strong>
+                <span>{product.name}</span>
+                <strong className="price">{formatPrice(product.price)}</strong>
               </button>
             </li>
           ))}
@@ -131,21 +122,28 @@ export function BetaBooth() {
       </section>
       <section
         id="booth-location"
-        className="cm-location"
+        className="section inverse cm-location"
         aria-labelledby="location-title"
       >
-        <p className="cm-location-number" aria-hidden="true">
+        {booth.image_path && (
+          <Photo
+            path={booth.image_path}
+            alt={`${booth.market_name} ${booth.name} 매대 사진`}
+            className="media landscape"
+            zoom
+          />
+        )}
+        <p className="cm-location-number">
+          <span className="sr-only">매대 </span>
           {booth.booth_number}
         </p>
         <div>
-          <h2 id="location-title">
-            {booth.market_name} 매대 {booth.booth_number}에서 만나요
-          </h2>
+          <h2 id="location-title">{booth.market_name}에서 만나요</h2>
           <p className="cm-location-place">
             <MapPin size={18} aria-hidden="true" />
             {booth.location_text}
           </p>
-          <p className="cm-location-note">{booth.description}</p>
+          <p className="lede">{booth.description}</p>
         </div>
       </section>
       {selected && (
@@ -200,7 +198,7 @@ function BrandFilm() {
   const { youtube_id, title, poster_path } = brand.video;
   if (playing)
     return (
-      <div className="cm-film-frame">
+      <div className="media wide cm-film">
         <iframe
           src={`https://www.youtube-nocookie.com/embed/${youtube_id}?autoplay=1&rel=0&playsinline=1`}
           title={title}
@@ -211,7 +209,7 @@ function BrandFilm() {
     );
   return (
     <button
-      className="cm-film-frame cm-film-poster"
+      className="media wide cm-film"
       onClick={() => setPlaying(true)}
       aria-label={`${title} 영상 재생`}
     >
