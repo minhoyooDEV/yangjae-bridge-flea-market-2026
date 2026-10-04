@@ -90,7 +90,7 @@ export function BetaBooth() {
         </ol>
       </section>
       <section className="section" aria-labelledby="products-title">
-        <h2 id="products-title">매대에서 만나는 그라인더</h2>
+        <h2 id="products-title">플리마켓 기획상품</h2>
         <p className="hint">물건을 누르면 자세한 설명이 열려요.</p>
         <ul className="list-plain grid-2">
           {products.map((product) => (

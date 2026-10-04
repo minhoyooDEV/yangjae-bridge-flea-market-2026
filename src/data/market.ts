@@ -64,6 +64,18 @@ export const products: MarketProduct[] = [
     ],
   },
   {
+    id: "derwent-salt-pepper-brown",
+    name: "더웬트 소금·후추 그라인더 세트 브라운",
+    price: 78000,
+    description:
+      "콜앤메이슨 베스트셀러 더웬트의 소금·후추 그라인더 한 쌍이에요. 짙은 나무와 코퍼 링이 어우러진 브라운 색상으로, 선물 상자에 담겨 있어요.\nPrecision+ 분쇄 메커니즘으로 후추 향을 잘 살리고, 굵기를 굵게부터 곱게까지 조절해요. 윗부분을 쏙 빼서 쉽게 채울 수 있어요.",
+    image_path: "/brand/products/salt-pepper-brown-01.jpg",
+    gallery: [
+      "/brand/products/salt-pepper-brown-03.jpg",
+      "/brand/products/salt-pepper-brown-02.jpg",
+    ],
+  },
+  {
     id: "london-set-beech",
     name: "런던 소금·후추 그라인더 세트 내추럴 비치",
     price: 82000,
