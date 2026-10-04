@@ -1,21 +1,18 @@
 import { useEffect, useRef, useState, type ReactNode } from "react";
 import { Link } from "react-router-dom";
 import { ArrowLeft, ImageOff, Store, X } from "lucide-react";
+import { booth, brand } from "./data/market";
 import { imageUrl } from "./lib/public-image";
 
 export function Brand() {
   return (
-    <Link className="brand" to="/" aria-label="양재천 브릿지마켓 홈">
+    <Link className="brand" to="/" aria-label="콜앤메이슨 매대 홈">
       <img
-        src={`${import.meta.env.BASE_URL}favicon.svg`}
-        alt=""
-        width="38"
-        height="38"
+        src={imageUrl(brand.logo_path)}
+        alt="Cole & Mason England"
+        width="159"
+        height="25"
       />
-      <span>
-        <small>YANGJAE BRIDGE MARKET</small>
-        <strong>양재천 브릿지마켓</strong>
-      </span>
     </Link>
   );
 }
@@ -39,7 +36,10 @@ export function Layout({ children }: { children: ReactNode }) {
         {children}
       </main>
       <footer className="site-footer">
-        <p>일상 속 작은 발견, 우리 동네 마켓</p>
+        <p>콜앤메이슨 코리아는 {booth.market_name}에 참여해요.</p>
+        <a href={brand.website} target="_blank" rel="noreferrer">
+          공식몰 둘러보기
+        </a>
       </footer>
     </div>
   );

@@ -1,7 +1,8 @@
 import { useEffect, useRef, useState } from "react";
-import { ChevronRight, MapPin, X } from "lucide-react";
+import { ExternalLink, MapPin, Play, X } from "lucide-react";
 import { Empty, Photo } from "../components";
-import { booth, products, type MarketProduct } from "../data/market";
+import { booth, brand, products, type MarketProduct } from "../data/market";
+import { imageUrl } from "../lib/public-image";
 import { formatPrice } from "../lib/validation";
 
 export function BetaBooth() {
@@ -21,43 +22,103 @@ export function BetaBooth() {
   }, [selected]);
 
   return (
-    <div className="beta-page">
-      <div className="beta-heading">
-        <p className="eyebrow">계단 위, 오늘의 작은 발견</p>
-        <h1>{booth.name}</h1>
-        {booth.is_sample && (
-          <p className="sample-note">
-            미리보기 · 상품과 가격은 예시이며 실제 판매 정보는 준비 중이에요.
+    <div className="cm-page">
+      <section className="cm-hero" aria-labelledby="hero-title">
+        <img
+          className="cm-hero-image"
+          src={imageUrl(brand.hero_path)}
+          alt=""
+          fetchPriority="high"
+        />
+        <div className="cm-hero-copy">
+          <p className="cm-hero-market">
+            {booth.market_name} 매대 {booth.booth_number}
           </p>
-        )}
-      </div>
-      <Photo
-        path={booth.image_path}
-        alt={`${booth.name} 매대 사진`}
-        className="beta-photo"
-        eager
-        zoom
-      />
-      {booth.description && (
-        <p className="beta-description">{booth.description}</p>
+          <h1 id="hero-title" lang="en">
+            {brand.tagline}
+          </h1>
+          <p className="cm-hero-lede">{brand.intro}</p>
+          <div className="cm-hero-actions">
+            <a className="cm-button cm-button-light" href="#brand-film">
+              <Play size={16} aria-hidden="true" />
+              브랜드 영상 보기
+            </a>
+            <a className="cm-button cm-button-ghost" href="#booth-location">
+              <MapPin size={16} aria-hidden="true" />
+              매대 위치 보기
+            </a>
+          </div>
+        </div>
+      </section>
+      {booth.is_sample && (
+        <p className="sample-note cm-sample-note">
+          미리보기 · 상품과 가격은 공식몰 기준 예시이며 현장 판매 정보는 준비
+          중이에요.
+        </p>
       )}
-      <section className="beta-products" aria-labelledby="products-title">
-        <h2 id="products-title">오늘의 물건들</h2>
-        <p className="beta-hint">궁금한 물건을 터치해 자세히 살펴보세요.</p>
-        <ul className="beta-product-list">
+      <section
+        id="brand-film"
+        className="cm-section cm-film"
+        aria-labelledby="film-title"
+      >
+        <h2 id="film-title">영상으로 먼저 만나보세요</h2>
+        <BrandFilm />
+        <a
+          className="cm-text-link"
+          href={`https://www.youtube.com/watch?v=${brand.video.youtube_id}`}
+          target="_blank"
+          rel="noreferrer"
+        >
+          유튜브에서 보기
+          <ExternalLink size={14} aria-hidden="true" />
+        </a>
+      </section>
+      <section className="cm-section cm-story" aria-labelledby="story-title">
+        <h2 id="story-title">1919년 런던에서 시작했어요</h2>
+        <p className="cm-story-lede">
+          소금과 후추를 가는 도구 하나로 100년을 넘겼어요. 세계 최초의 아크릴
+          그라인더, 소금·후추 듀얼 그라인딩 특허 모두 콜앤메이슨에서 나왔어요.
+        </p>
+        <img
+          className="cm-story-image"
+          src={imageUrl(brand.heritage_path)}
+          alt="1919년 무렵 런던 거리 사진 위에 놓인 Since 1919 표시"
+          loading="lazy"
+          decoding="async"
+        />
+        <ol className="cm-timeline">
+          {brand.story.map((item) => (
+            <li key={item.year}>
+              <span className="cm-year">{item.year}</span>
+              <span>{item.text}</span>
+            </li>
+          ))}
+        </ol>
+      </section>
+      <section
+        className="cm-section cm-products"
+        aria-labelledby="products-title"
+      >
+        <h2 id="products-title">매대에서 만나는 그라인더</h2>
+        <p className="cm-hint">물건을 누르면 자세한 설명이 열려요.</p>
+        <ul className="cm-product-grid">
           {products.map((product) => (
             <li key={product.id}>
               <button
-                className="beta-product-row"
+                className="cm-product"
                 aria-haspopup="dialog"
                 onClick={(event) => {
                   opener.current = event.currentTarget;
                   setSelected(product);
                 }}
               >
-                <span className="beta-product-name">{product.name}</span>
+                <Photo
+                  path={product.image_path}
+                  alt=""
+                  className="cm-product-photo"
+                />
+                <span className="cm-product-name">{product.name}</span>
                 <strong>{formatPrice(product.price)}</strong>
-                <ChevronRight size={18} aria-hidden="true" />
               </button>
             </li>
           ))}
@@ -70,13 +131,21 @@ export function BetaBooth() {
       </section>
       <section
         id="booth-location"
-        className="location-box"
-        aria-label="매대 위치"
+        className="cm-location"
+        aria-labelledby="location-title"
       >
-        <MapPin size={22} aria-hidden="true" />
+        <p className="cm-location-number" aria-hidden="true">
+          {booth.booth_number}
+        </p>
         <div>
-          <strong>매대 {booth.booth_number}에서 만나요</strong>
-          <p>{booth.location_text}</p>
+          <h2 id="location-title">
+            {booth.market_name} 매대 {booth.booth_number}에서 만나요
+          </h2>
+          <p className="cm-location-place">
+            <MapPin size={18} aria-hidden="true" />
+            {booth.location_text}
+          </p>
+          <p className="cm-location-note">{booth.description}</p>
         </div>
       </section>
       {selected && (
@@ -122,5 +191,34 @@ export function BetaBooth() {
         </dialog>
       )}
     </div>
+  );
+}
+
+// Loads the YouTube player only after a tap, so the page stays light on mobile data.
+function BrandFilm() {
+  const [playing, setPlaying] = useState(false);
+  const { youtube_id, title, poster_path } = brand.video;
+  if (playing)
+    return (
+      <div className="cm-film-frame">
+        <iframe
+          src={`https://www.youtube-nocookie.com/embed/${youtube_id}?autoplay=1&rel=0&playsinline=1`}
+          title={title}
+          allow="autoplay; encrypted-media; picture-in-picture; fullscreen"
+          allowFullScreen
+        />
+      </div>
+    );
+  return (
+    <button
+      className="cm-film-frame cm-film-poster"
+      onClick={() => setPlaying(true)}
+      aria-label={`${title} 영상 재생`}
+    >
+      <img src={imageUrl(poster_path)} alt="" loading="lazy" decoding="async" />
+      <span className="cm-film-play" aria-hidden="true">
+        <Play size={26} fill="currentColor" />
+      </span>
+    </button>
   );
 }

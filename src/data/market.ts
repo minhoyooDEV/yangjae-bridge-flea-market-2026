@@ -8,39 +8,91 @@ export interface MarketProduct {
   image_path: string | null;
 }
 
+export const brand = {
+  name: "콜앤메이슨",
+  name_en: "Cole & Mason",
+  logo_path: "/brand/logo.jpg",
+  hero_path: "/brand/hero.jpg",
+  heritage_path: "/brand/since-1919.jpg",
+  tagline: "Experts in Seasoning since 1919",
+  intro:
+    "1919년 영국 런던에서 시작한 시즈닝 브랜드예요. 100년 넘게 소금과 후추를 가는 일 하나에 집중해 왔어요.",
+  story: [
+    { year: 1919, text: "영국 런던에서 설립" },
+    { year: 1946, text: "캡스턴 그라인더 출시" },
+    { year: 1975, text: "세계 최초 아크릴 그라인더 출시" },
+    { year: 1981, text: "소금·후추 듀얼 그라인딩 특허" },
+    { year: 1986, text: "엘리자베스 여왕상 수상" },
+    { year: 2001, text: "전동 그라인더 출시" },
+    { year: 2010, text: "베스트셀러 더웬트 출시" },
+    { year: 2019, text: "설립 100주년" },
+    { year: 2023, text: "런던 시리즈 출시" },
+  ],
+  video: {
+    youtube_id: "qTv2Q3abhH4",
+    title: "Cole & Mason — Experts in Seasoning since 1919",
+    poster_path: "/brand/video-poster.jpg",
+  },
+  website: "https://coleandmason.co.kr/",
+};
+
 export const booth = {
-  name: "매대 01",
+  market_name: "양재천 브릿지마켓",
+  name: "콜앤메이슨",
   booth_number: "01",
   description:
-    "따뜻한 조명 아래, 일상에 작은 즐거움을 더하는 물건들을 만나보세요.",
-  image_path: "/sample-images/booth-01.jpg",
+    "그라인더를 직접 돌려 보고, 갓 간 후추 향을 맡아 보세요. 손에 맞는 그라인더를 함께 찾아 드려요.",
   location_text: "계단 위 · 정확한 매대 위치는 준비 중이에요.",
   is_sample: true,
 };
 
 export const products: MarketProduct[] = [
   {
-    id: "wooden-board",
-    name: "나무 도마",
-    price: 12000,
+    id: "london-set-beech",
+    name: "런던 소금·후추 그라인더 세트 내추럴 비치",
+    price: 82000,
     description:
-      "주방에 따뜻함을 더하는 나무 도마예요.\n예시 상품입니다. 실제 소재와 크기는 판매 정보 확정 후 안내할게요.",
-    image_path: null,
+      "2023년에 나온 런던 시리즈의 소금·후추 그라인더 한 쌍이에요. 밝은 너도밤나무 결이 식탁을 부드럽게 만들어 줘요.\n가격은 공식몰 판매가 기준 예시예요. 현장 가격은 매대에서 확인해 주세요.",
+    image_path: "/brand/products/london-set-beech.jpg",
   },
   {
-    id: "mug",
-    name: "머그컵",
-    price: 8000,
+    id: "london-set-chocolate",
+    name: "런던 소금·후추 그라인더 세트 다크 초콜릿",
+    price: 82000,
     description:
-      "매일의 차 한 잔과 함께하는 머그컵이에요.\n예시 상품입니다. 실제 색상과 용량은 판매 정보 확정 후 안내할게요.",
-    image_path: null,
+      "런던 시리즈 소금·후추 그라인더 한 쌍을 짙은 초콜릿 색 나무로 만났어요. 선물 상자에 담겨 있어요.\n가격은 공식몰 판매가 기준 예시예요. 현장 가격은 매대에서 확인해 주세요.",
+    image_path: "/brand/products/london-set-chocolate.jpg",
   },
   {
-    id: "fabric-coaster",
-    name: "패브릭 컵받침",
-    price: 3000,
+    id: "london-set-gloss-black",
+    name: "런던 소금·후추 그라인더 세트 글로스 블랙",
+    price: 98000,
     description:
-      "테이블에 작은 포인트가 되는 컵받침이에요.\n예시 상품입니다. 실제 소재와 구성은 판매 정보 확정 후 안내할게요.",
-    image_path: null,
+      "광택 있는 블랙 마감의 런던 시리즈 소금·후추 그라인더 한 쌍이에요. 선물 상자에 담겨 있어요.\n가격은 공식몰 판매가 기준 예시예요. 현장 가격은 매대에서 확인해 주세요.",
+    image_path: "/brand/products/london-set-gloss-black.jpg",
+  },
+  {
+    id: "london-pepper-acrylic",
+    name: "런던 후추 그라인더 아크릴",
+    price: 44000,
+    description:
+      "안에 담긴 통후추가 보이는 투명 아크릴 런던 그라인더예요. 1975년 세계 최초로 아크릴 그라인더를 만든 콜앤메이슨의 대표 소재예요.\n가격은 공식몰 판매가 기준 예시예요. 현장 가격은 매대에서 확인해 주세요.",
+    image_path: "/brand/products/london-pepper-acrylic.jpg",
+  },
+  {
+    id: "kenton",
+    name: "켄톤 소금·후추 겸용 그라인더",
+    price: 33000,
+    description:
+      "소금과 후추 어느 쪽에도 쓸 수 있는 켄톤 그라인더예요. 처음 그라인더를 들이는 분께 권해요.\n가격은 공식몰 판매가 기준 예시예요. 현장 가격은 매대에서 확인해 주세요.",
+    image_path: "/brand/products/kenton.jpg",
+  },
+  {
+    id: "refill-funnel",
+    name: "스테인리스 리필 퍼널",
+    price: 16000,
+    description:
+      "그라인더에 통후추나 소금을 흘리지 않고 채우는 스테인리스 깔때기예요.\n가격은 공식몰 판매가 기준 예시예요. 현장 가격은 매대에서 확인해 주세요.",
+    image_path: "/brand/products/refill-funnel.jpg",
   },
 ];

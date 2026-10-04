@@ -4,7 +4,7 @@
 
 현재 버전은 **1.0.0**이다. 매대 사진 아래 상품명·가격을 표시하고, 상품을 터치하면 상세 설명 모달을 연다. 위치 안내도 같은 페이지에 표시한다. 로그인, DB 연결, 서버 API, 관리 화면은 사용하지 않는다.
 
-매대·상품 데이터는 [`src/data/market.ts`](src/data/market.ts)에 직접 작성한다. 현재 상품과 가격은 **예시**이며 실제 판매 정보로 확정된 값이 아니다. 실제 내용으로 교체하고 `booth.is_sample`을 false로 바꾸면 미리보기 안내가 사라진다. 사진은 `public/`에 넣고 경로를 데이터에 지정한다. 데이터를 바꾼 뒤 다시 배포한다.
+매대·상품 데이터는 [`src/data/market.ts`](src/data/market.ts)에 직접 작성한다. 콜앤메이슨 매대 페이지이며 브랜드 소개·연표·영상(YouTube)·매대 위치를 보여준다. 브랜드 정보와 영상 ID는 같은 파일의 `brand`에 있다. 현재 상품과 가격은 공식몰(coleandmason.co.kr) 판매가 기준 **예시**이며 현장 판매 정보로 확정된 값이 아니다. 실제 내용으로 교체하고 `booth.is_sample`을 false로 바꾸면 미리보기 안내가 사라진다. 사진은 `public/brand/`에 넣고 경로를 데이터에 지정한다. 데이터를 바꾼 뒤 다시 배포한다.
 
 GitHub Pages에 배포하며 Secrets나 환경변수는 필요 없다. `.github/workflows/pages.yml`이 main push 시 테스트·빌드·배포한다. Settings → Pages → Source를 GitHub Actions로 설정한다. 비공개 저장소는 Pages 지원 요금제가 필요하며 저장소 공개 여부는 자동 변경하지 않는다.
 
