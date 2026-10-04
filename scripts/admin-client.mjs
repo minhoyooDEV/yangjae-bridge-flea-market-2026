@@ -1,5 +1,8 @@
+import { requireBackendAccess } from "../src/lib/backend-access.ts";
 import { execFileSync } from "node:child_process";
 import { createClient } from "@supabase/supabase-js";
+
+requireBackendAccess();
 
 export function adminClient() {
   const ref = process.env.SUPABASE_PROJECT_REF;
