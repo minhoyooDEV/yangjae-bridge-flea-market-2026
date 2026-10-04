@@ -8,14 +8,14 @@
 
 ## 개발과 검증
 
-Node.js 24+와 npm을 사용한다. 클라우드 작업 디렉터리는 `/workspace/yangjae-bridge-flea-market-2026`이다. 이미 격리된 기존 체크아웃을 사용하고 별도 worktree는 만들지 않는다.
+Node.js 24+와 pnpm을 사용한다. 클라우드 작업 디렉터리는 `/workspace/yangjae-bridge-flea-market-2026`이다. 이미 격리된 기존 체크아웃을 사용하고 별도 worktree는 만들지 않는다.
 
 ```sh
-npm ci --cache /workspace/.npm-cache --no-audit --no-fund
-npm test
-npm run format:check
-npm run build
-npm run dev -- --port 5173 --strictPort
+pnpm install --frozen-lockfile --store-dir /workspace/.pnpm-store
+pnpm test
+pnpm run format:check
+pnpm run build
+pnpm run dev --port 5173 --strictPort
 ```
 
 `.env.local`과 서비스 프로세스는 필요 없다. 개발 서버만 실행한다. 원페이지의 사진·가격·상세 모달, 닫기·Escape·포커스 복원, 모바일 가로 넘침을 확인한다. 네트워크에서 Supabase/Auth 요청이 없어야 한다.
@@ -23,8 +23,8 @@ npm run dev -- --port 5173 --strictPort
 GitHub Pages 프로젝트 경로 검증:
 
 ```sh
-PAGES_BASE_PATH=/yangjae-bridge-flea-market-2026 npm run build
-PAGES_BASE_PATH=/yangjae-bridge-flea-market-2026 npm run preview -- --port 4173 --strictPort
+PAGES_BASE_PATH=/yangjae-bridge-flea-market-2026 pnpm run build
+PAGES_BASE_PATH=/yangjae-bridge-flea-market-2026 pnpm run preview --port 4173 --strictPort
 ```
 
 ## 배포

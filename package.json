@@ -13,7 +13,7 @@
     "vendor:reset": "node --env-file=.env.local scripts/reset-vendor-password.mjs",
     "images:check": "node --env-file=.env.local scripts/cleanup-images.mjs",
     "format:check": "prettier --check src scripts vite.config.ts tsconfig.json package.json index.html",
-    "package:pages": "npm run build && python3 scripts/package-pages.py"
+    "package:pages": "pnpm run build && python3 scripts/package-pages.py"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.117.2",
@@ -37,5 +37,6 @@
   },
   "engines": {
     "node": ">=24.0.0"
-  }
+  },
+  "packageManager": "pnpm@12.9.1"
 }

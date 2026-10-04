@@ -23,7 +23,7 @@
 
 ### 방문 분석 (PostHog)
 
-PostHog(US 클라우드)로 페이지뷰·웹 분석·세션 리플레이를 수집한다. 프로젝트 키는 코드에 두지 않고 저장소 시크릿 `POSTHOG_KEY`로 관리한다. 배포 워크플로가 빌드 때 `VITE_POSTHOG_KEY`로 넘기며, 값이 없으면 분석이 꺼진다(로컬 빌드 포함). 키를 바꿀 때는 `gh secret set POSTHOG_KEY`로 갱신하고 다시 배포한다. 로컬 개발(`npm run dev`)은 이벤트를 보내지 않는다. 직접 보내는 이벤트: `product_viewed`(상품 상세 열기), `brand_film_played`, `series_opened`, `official_site_opened`(로고).
+PostHog(US 클라우드)로 페이지뷰·웹 분석·세션 리플레이를 수집한다. 프로젝트 키는 코드에 두지 않고 저장소 시크릿 `POSTHOG_KEY`로 관리한다. 배포 워크플로가 빌드 때 `VITE_POSTHOG_KEY`로 넘기며, 값이 없으면 분석이 꺼진다(로컬 빌드 포함). 키를 바꿀 때는 `gh secret set POSTHOG_KEY`로 갱신하고 다시 배포한다. 로컬 개발(`pnpm dev`)은 이벤트를 보내지 않는다. 직접 보내는 이벤트: `product_viewed`(상품 상세 열기), `brand_film_played`, `series_opened`, `official_site_opened`(로고).
 
 제작자 방문 구분: 내 휴대폰·PC에서 주소 끝에 `?creator=on`을 붙여 한 번 열면 그 브라우저가 기억한다. 이후 그 브라우저의 모든 이벤트에 `is_creator=true`가 붙고 세션 리플레이는 녹화하지 않으며, 헤더에 "제작자 모드" 표시가 보인다. 표시를 누르거나 `?creator=off`로 열면 해제된다. 브라우저 저장소를 지우면 다시 켜야 한다. PostHog에서 Settings → Project → Product analytics → "Filter out internal and test users"에 이벤트 속성 `is_creator` = `true`를 추가하면 인사이트·웹 분석에서 제작자 방문을 뺄 수 있다.
 
@@ -31,16 +31,16 @@ GitHub Pages에 배포하며, 필요한 시크릿은 분석용 `POSTHOG_KEY` 하
 
 ## 개발
 
-Node.js 24 이상과 npm을 사용한다. `.env.local`은 필요 없다.
+Node.js 24 이상과 pnpm을 사용한다(버전은 `package.json`의 `packageManager`, `corepack enable`로 활성화). `.env.local`은 필요 없다.
 
 ```sh
-npm ci
-npm run dev
-npm test
-npm run build
+pnpm install --frozen-lockfile
+pnpm dev
+pnpm test
+pnpm build
 ```
 
-클라우드에서 기본 npm 캐시에 쓸 수 없으면 `npm ci --cache /workspace/.npm-cache`를 사용한다. 저장소 하위 경로는 배포 워크플로우에서 자동 설정한다. 방문객은 배포 기본 주소로 접속하며 기존 로그인·관리 해시 경로는 원페이지로 이동한다.
+클라우드에서 기본 pnpm store에 쓸 수 없으면 `pnpm install --frozen-lockfile --store-dir /workspace/.pnpm-store`를 사용한다. 저장소 하위 경로는 배포 워크플로우에서 자동 설정한다. 방문객은 배포 기본 주소로 접속하며 기존 로그인·관리 해시 경로는 원페이지로 이동한다.
 
 상세 절차: [배포 워크플로우](docs/beta-workflow.md), [운영 안내](docs/operations.md).
 

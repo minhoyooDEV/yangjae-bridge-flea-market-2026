@@ -20,13 +20,14 @@ jobs:
       pages: read
     steps:
       - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
       - uses: actions/setup-node@v4
         with:
           node-version: "24"
-          cache: npm
-      - run: npm ci
-      - run: npm test
-      - run: npm run format:check
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm test
+      - run: pnpm run format:check
       - name: Configure Pages
         id: pages
         uses: actions/configure-pages@v5
@@ -35,7 +36,7 @@ jobs:
           PAGES_BASE_PATH: ${{ steps.pages.outputs.base_path }}
           VITE_POSTHOG_KEY: ${{ secrets.POSTHOG_KEY }}
         run: |
-          npm run build
+          pnpm run build
           rm -f dist/_headers dist/_redirects
           touch dist/.nojekyll
       - uses: actions/upload-pages-artifact@v3
