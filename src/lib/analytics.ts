@@ -1,4 +1,5 @@
 import type { PostHog } from "posthog-js";
+import { version } from "../../package.json";
 import { readCreator } from "./creator";
 
 // PostHog project key, injected at build time from the POSTHOG_KEY repository
@@ -26,15 +27,41 @@ export function initAnalytics() {
         if (event && isCreator) event.properties.is_creator = true;
         return event;
       },
+      // Uncaught errors and rejections go to Error Tracking once loaded.
+      capture_exceptions: {
+        capture_unhandled_errors: true,
+        capture_unhandled_rejections: true,
+        capture_console_errors: false,
+      },
+      logs: {
+        serviceName: "yangjae-bridge-flea-market-web",
+        environment: import.meta.env.MODE,
+        serviceVersion: version,
+      },
     });
     client = posthog;
     for (const [name, properties] of pending.splice(0))
-      posthog.capture(name, properties);
+      send(posthog, name, properties);
+  });
+}
+
+// Each event also goes out as a structured log line. before_send does not
+// apply to logs, so the creator flag is attached here.
+function send(
+  posthog: PostHog,
+  name: string,
+  properties?: Record<string, unknown>,
+) {
+  posthog.capture(name, properties);
+  posthog.logger.info(name, {
+    event: name,
+    ...properties,
+    ...(isCreator && { is_creator: true }),
   });
 }
 
 export function track(name: string, properties?: Record<string, unknown>) {
-  if (client) client.capture(name, properties);
+  if (client) send(client, name, properties);
   else if (POSTHOG_KEY && !import.meta.env.DEV)
     pending.push([name, properties]);
 }
