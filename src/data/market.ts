@@ -75,4 +75,16 @@ export const products: MarketProduct[] = [
       "/brand/products/salt-pepper-brown-02.jpg",
     ],
   },
+  {
+    id: "derwent-salt-pepper-dark",
+    name: "더웬트 소금·후추 그라인더 세트 다크",
+    price: 78000,
+    description:
+      "콜앤메이슨 베스트셀러 더웬트의 소금·후추 그라인더 한 쌍이에요. 짙은 나무와 스테인리스 링이 어우러진 다크 색상으로, 선물 상자에 담겨 있어요.\nPrecision+ 분쇄 메커니즘으로 후추 향을 잘 살리고, 굵기를 굵게부터 곱게까지 조절해요. 윗부분을 쏙 빼서 쉽게 채울 수 있어요.",
+    image_path: "/brand/products/salt-pepper-dark-01.jpg",
+    gallery: [
+      "/brand/products/salt-pepper-dark-03.jpg",
+      "/brand/products/salt-pepper-dark-02.jpg",
+    ],
+  },
 ];
