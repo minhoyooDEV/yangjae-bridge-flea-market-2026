@@ -45,7 +45,7 @@ export const booth = {
   description:
     "그라인더를 직접 돌려 보고, 갓 간 후추 향을 맡아 보세요. 손에 맞는 그라인더를 함께 찾아 드려요.",
   // 실제 매대 사진: public/brand/에 넣고 "/brand/booth.jpg"처럼 지정. null이면 숨김.
-  image_path: null as string | null,
+  image_path: "/brand/booth.jpg" as string | null,
   location_text: "계단 위 · 정확한 매대 위치는 준비 중이에요.",
   is_sample: false,
 };
