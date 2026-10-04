@@ -8,7 +8,7 @@
 
 - 공개 주소 https://minhoyoodev.github.io/yangjae-bridge-flea-market-2026/ 는 HTTP 200으로 응답하고, `main`의 최신 커밋이 배포돼 있다(태그 `v1.0.0`).
 - 내용: 콜앤메이슨 매대 페이지. 기획상품 9종(허브 키퍼 3, 주방 도구 4, 그라인더 세트 2), 매대 위치 "꿈놀이터 계단 위", 브랜드 소개·연표·영상.
-- 데이터·사진 수정 방법과 규칙은 README의 1.x.x 절을 따른다. 변경 후 `npm run format:check`, `npm test`, `npm run build`를 통과시키고 `main`에 push하면 Pages가 자동 배포된다.
+- 데이터·사진 수정 방법과 규칙은 README의 1.x.x 절을 따른다. 변경 후 `pnpm run format:check`, `pnpm test`, `pnpm run build`를 통과시키고 `main`에 push하면 Pages가 자동 배포된다.
 
 ## 최우선 목표
 
@@ -126,14 +126,14 @@ Supabase 설정 자체, DB·Storage 연결, 로그인·계정, 업체 관리 및
 필요 시 저장소 루트에서:
 
 ```sh
-npm ci
-npm test
-npm run format:check
-PAGES_BASE_PATH=/yangjae-bridge-flea-market-2026 npm run build
-PAGES_BASE_PATH=/yangjae-bridge-flea-market-2026 npm run preview -- --port 4174 --strictPort
+pnpm install --frozen-lockfile
+pnpm test
+pnpm run format:check
+PAGES_BASE_PATH=/yangjae-bridge-flea-market-2026 pnpm run build
+PAGES_BASE_PATH=/yangjae-bridge-flea-market-2026 pnpm run preview --port 4174 --strictPort
 ```
 
-Node.js 24 이상을 사용한다. 클라우드에서는 기본 npm 캐시가 쓰기 불가여서 `--cache /workspace/.npm-cache`를 사용했지만, 로컬에서는 일반 `npm ci`부터 사용한다. 테스트를 통과한 코드에 불필요한 리팩터링을 추가하지 않는다.
+Node.js 24 이상을 사용한다. 클라우드에서 기본 pnpm store가 쓰기 불가하면 `--store-dir /workspace/.pnpm-store`를 사용하고, 로컬에서는 일반 `pnpm install --frozen-lockfile`부터 사용한다. 테스트를 통과한 코드에 불필요한 리팩터링을 추가하지 않는다.
 
 ## 참고 및 주의
 

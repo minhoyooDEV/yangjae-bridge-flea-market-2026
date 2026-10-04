@@ -4,7 +4,7 @@ from zipfile import ZipFile, ZIP_DEFLATED
 
 build = Path('dist')
 if not (build / 'index.html').is_file():
-    raise SystemExit('Run npm run build first.')
+    raise SystemExit('Run pnpm run build first.')
 destination = Path('.local/cloudflare-pages.zip')
 destination.parent.mkdir(exist_ok=True)
 with ZipFile(destination, 'w', ZIP_DEFLATED) as archive:
