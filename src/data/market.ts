@@ -57,7 +57,7 @@ export const booth = {
 export const products: MarketProduct[] = [
   {
     id: "cambourne-dressing-shaker",
-    name: "캠번 샐러드 드레싱 쉐이커",
+    name: "드레싱 쉐이커",
     category: "주방 도구",
     price: 15000,
     description:
@@ -70,7 +70,7 @@ export const products: MarketProduct[] = [
   },
   {
     id: "derwent-salt-pepper-brown",
-    name: "더웬트 소금·후추 그라인더 세트 브라운",
+    name: "그라인더 세트 브라운",
     category: "소금·후추 그라인더",
     price: 78000,
     description:
@@ -83,7 +83,7 @@ export const products: MarketProduct[] = [
   },
   {
     id: "derwent-salt-pepper-dark",
-    name: "더웬트 소금·후추 그라인더 세트 다크",
+    name: "그라인더 세트 다크",
     category: "소금·후추 그라인더",
     price: 78000,
     description:
@@ -96,7 +96,7 @@ export const products: MarketProduct[] = [
   },
   {
     id: "barkway-acacia-board",
-    name: "바크웨이 아카시아 나무 도마",
+    name: "아카시아 원목 도마",
     category: "주방 도구",
     price: 15000,
     options: [
@@ -111,7 +111,7 @@ export const products: MarketProduct[] = [
   },
   {
     id: "tealby-cut-herb-keeper",
-    name: "틸비 컷 허브 키퍼",
+    name: "허브 신선 보관함",
     category: "허브 키퍼",
     price: 20000,
     description:
@@ -124,7 +124,7 @@ export const products: MarketProduct[] = [
   },
   {
     id: "burwell-herb-keeper-triple",
-    name: "버웰 셀프워터링 허브 키퍼 3구",
+    name: "자동급수 화분 3구",
     category: "허브 키퍼",
     price: 20000,
     description:
@@ -137,7 +137,7 @@ export const products: MarketProduct[] = [
   },
   {
     id: "burwell-herb-keeper-single",
-    name: "버웰 셀프워터링 허브 키퍼 1구",
+    name: "자동급수 화분 1구",
     category: "허브 키퍼",
     price: 10000,
     description:
