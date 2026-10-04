@@ -111,7 +111,7 @@ export const products: MarketProduct[] = [
   },
   {
     id: "tealby-cut-herb-keeper",
-    name: "허브 신선 보관함",
+    name: "컷 허브 키퍼",
     category: "허브 키퍼",
     price: 20000,
     description:
@@ -124,7 +124,7 @@ export const products: MarketProduct[] = [
   },
   {
     id: "burwell-herb-keeper-triple",
-    name: "자동급수 화분 3구",
+    name: "자동급수 허브 키퍼 3구",
     category: "허브 키퍼",
     price: 20000,
     description:
@@ -137,7 +137,7 @@ export const products: MarketProduct[] = [
   },
   {
     id: "burwell-herb-keeper-single",
-    name: "자동급수 화분 1구",
+    name: "자동급수 허브 키퍼 1구",
     category: "허브 키퍼",
     price: 10000,
     description:
