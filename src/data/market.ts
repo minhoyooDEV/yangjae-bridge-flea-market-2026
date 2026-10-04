@@ -8,6 +8,8 @@ export interface MarketProduct {
   image_path: string | null;
   // 상세 창에서 대표 사진 뒤에 이어 보여줄 사진들
   gallery?: string[];
+  // 사이즈 등 선택지별 가격. 있으면 price는 가장 낮은 가격으로 둔다.
+  options?: { label: string; price: number }[];
 }
 
 export const brand = {
@@ -86,5 +88,19 @@ export const products: MarketProduct[] = [
       "/brand/products/salt-pepper-dark-03.jpg",
       "/brand/products/salt-pepper-dark-02.jpg",
     ],
+  },
+  {
+    id: "barkway-acacia-board",
+    name: "바크웨이 아카시아 나무 도마",
+    price: 15000,
+    options: [
+      { label: "소", price: 15000 },
+      { label: "중", price: 25000 },
+      { label: "대", price: 35000 },
+    ],
+    description:
+      "결이 살아 있는 아카시아 원목 도마예요. 소·중·대 세 가지 크기가 있어요.\n손잡이가 있어 들고 옮기기 편하고, 겹쳐 두거나 세워 두거나 걸어서 보관할 수 있어요.",
+    image_path: "/brand/products/acacia-board-02.jpg",
+    gallery: ["/brand/products/acacia-board-01.jpg"],
   },
 ];

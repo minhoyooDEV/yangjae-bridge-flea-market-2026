@@ -70,7 +70,7 @@ export function BetaBooth() {
                   className="media square"
                 />
                 <span>{product.name}</span>
-                <strong className="price">{formatPrice(product.price)}</strong>
+                <strong className="price">{listPrice(product)}</strong>
               </button>
             </li>
           ))}
@@ -170,7 +170,20 @@ export function BetaBooth() {
           </button>
           <ProductPhotos product={selected} />
           <h2 id="product-title">{selected.name}</h2>
-          <p className="product-dialog-price">{formatPrice(selected.price)}</p>
+          {selected.options?.length ? (
+            <ul className="list-plain price-list">
+              {selected.options.map((option) => (
+                <li key={option.label}>
+                  <span>{option.label}</span>
+                  <strong className="price">{formatPrice(option.price)}</strong>
+                </li>
+              ))}
+            </ul>
+          ) : (
+            <p className="product-dialog-price">
+              {formatPrice(selected.price)}
+            </p>
+          )}
           <p id="product-description">
             {selected.description || "자세한 이야기는 매대에서 만나보세요."}
           </p>
@@ -243,4 +256,10 @@ function ProductPhotos({ product }: { product: MarketProduct }) {
       </p>
     </>
   );
+}
+
+function listPrice(product: MarketProduct) {
+  if (!product.options?.length) return formatPrice(product.price);
+  const lowest = Math.min(...product.options.map((option) => option.price));
+  return `${formatPrice(lowest)}부터`;
 }

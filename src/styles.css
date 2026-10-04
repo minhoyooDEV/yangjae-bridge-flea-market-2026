@@ -1222,6 +1222,23 @@ textarea:disabled {
   font-size: 14px;
   font-weight: 500;
 }
+.price-list > li {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 12px;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--line);
+}
+.price-list > li:first-child {
+  border-top: 1px solid var(--line);
+}
+.price-list .price {
+  font-size: 16px;
+}
+.product-dialog .price-list {
+  margin: 16px 0 20px;
+}
 .list-plain {
   list-style: none;
   margin: 0;
