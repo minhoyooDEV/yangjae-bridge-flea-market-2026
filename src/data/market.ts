@@ -103,4 +103,40 @@ export const products: MarketProduct[] = [
     image_path: "/brand/products/acacia-board-02.jpg",
     gallery: ["/brand/products/acacia-board-01.jpg"],
   },
+  {
+    id: "tealby-cut-herb-keeper",
+    name: "틸비 컷 허브 키퍼",
+    price: 20000,
+    description:
+      "자른 허브와 채소를 싱싱하게 보관하는 키퍼예요. 받침에 물을 채워 냉장고에 넣어 두면 더 오래 신선해요.\n일반 냉장고 문칸에 쏙 들어가고, 칸막이가 있어 여러 허브를 나눠 담을 수 있어요.",
+    image_path: "/brand/products/cut-herb-keeper-01.jpg",
+    gallery: [
+      "/brand/products/cut-herb-keeper-02.jpg",
+      "/brand/products/cut-herb-keeper-03.jpg",
+    ],
+  },
+  {
+    id: "burwell-herb-keeper-triple",
+    name: "버웰 셀프워터링 허브 키퍼 3구",
+    price: 20000,
+    description:
+      "허브 화분 세 개를 나란히 키우는 셀프워터링 키퍼예요. 펠트 패드가 물을 끌어올려 허브가 마르지 않게 지켜 줘요.\n물을 너무 많이 주거나 적게 주는 걸 막아 주고, 동그란 화분이든 네모난 화분이든 그대로 넣으면 돼서 옮겨 심을 필요가 없어요.",
+    image_path: "/brand/products/herb-keeper-3-01.jpg",
+    gallery: [
+      "/brand/products/herb-keeper-3-02.jpg",
+      "/brand/products/herb-keeper-3-03.jpg",
+    ],
+  },
+  {
+    id: "burwell-herb-keeper-single",
+    name: "버웰 셀프워터링 허브 키퍼 1구",
+    price: 10000,
+    description:
+      "허브 화분 하나를 키우는 셀프워터링 키퍼예요. 펠트 패드가 물을 끌어올려 허브가 마르지 않게 지켜 줘요.\n물을 너무 많이 주거나 적게 주는 걸 막아 주고, 동그란 화분이든 네모난 화분이든 그대로 넣으면 돼서 옮겨 심을 필요가 없어요.",
+    image_path: "/brand/products/herb-keeper-1-01.jpg",
+    gallery: [
+      "/brand/products/herb-keeper-1-02.jpg",
+      "/brand/products/herb-keeper-1-03.jpg",
+    ],
+  },
 ];

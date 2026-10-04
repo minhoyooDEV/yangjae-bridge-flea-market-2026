@@ -1282,6 +1282,9 @@ textarea:disabled {
   flex: 0 0 82%;
   scroll-snap-align: start;
 }
+.carousel .media > img {
+  object-fit: contain;
+}
 .product-dialog .carousel + .hint {
   margin: 8px 0 20px;
 }
