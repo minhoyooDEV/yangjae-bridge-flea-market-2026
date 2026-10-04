@@ -139,7 +139,7 @@ export function Market() {
         </div>
         <div className="welcome-photo">
           <img
-            src="/sample-images/promotion-thumb.jpg"
+            src={`${import.meta.env.BASE_URL}sample-images/promotion-thumb.jpg`}
             alt="따뜻한 조명이 켜진 양재천 교각 아래 마켓 전경"
             width="384"
             height="512"

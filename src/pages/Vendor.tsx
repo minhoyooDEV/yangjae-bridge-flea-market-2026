@@ -27,7 +27,7 @@ import {
 } from "../components";
 import { removeImages, uploadImage } from "../lib/images";
 import { imageUrl, supabase, type Booth, type Product } from "../lib/supabase";
-import { validateProduct, vendorEmail } from "../lib/validation";
+import { parsePrice, validateProduct, vendorEmail } from "../lib/validation";
 
 function useVendorBooth() {
   const { session } = useAuth();
@@ -499,6 +499,7 @@ export function BoothEditor() {
 }
 
 export function ProductEditor() {
+  const [price, setPrice] = useState("");
   const { id } = useParams();
   const isNew = !id;
   const navigate = useNavigate();
@@ -540,6 +541,7 @@ export function ProductEditor() {
         setProduct(data);
         setName(data.name);
         setDescription(data.description);
+        setPrice(data.price == null ? "" : String(data.price));
       });
     return () => controller.abort();
   }, [booth, id]);
@@ -550,7 +552,10 @@ export function ProductEditor() {
     setError("");
     let uploaded: Awaited<ReturnType<typeof uploadImage>> | undefined;
     try {
-      const fields = validateProduct(name, description);
+      const fields = {
+        ...validateProduct(name, description),
+        price: parsePrice(price),
+      };
       if (file) uploaded = await uploadImage(file, booth.id);
       const paths =
         uploaded || (remove ? { image_path: null, thumbnail_path: null } : {});
@@ -651,6 +656,22 @@ export function ProductEditor() {
               disabled={busy}
               placeholder="어떤 물건인가요?"
             />
+          </label>
+          <label>
+            가격 (원)
+            <input
+              type="text"
+              inputMode="numeric"
+              pattern="[0-9]*"
+              maxLength={10}
+              value={price}
+              onChange={(e) => setPrice(e.target.value)}
+              disabled={busy}
+              placeholder="예: 12000"
+            />
+            <span className="field-hint">
+              비워 두면 ‘가격 문의’로 표시해요. 0원도 입력할 수 있어요.
+            </span>
           </label>
           <label>
             상품 이야기

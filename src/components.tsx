@@ -1,20 +1,17 @@
 import { useEffect, useRef, useState, type ReactNode } from "react";
-import { Link, NavLink } from "react-router-dom";
-import {
-  ArrowLeft,
-  ArrowUpRight,
-  Footprints,
-  ImageOff,
-  MapPin,
-  Store,
-  X,
-} from "lucide-react";
-import { imageUrl } from "./lib/supabase";
+import { Link } from "react-router-dom";
+import { ArrowLeft, ImageOff, Store, X } from "lucide-react";
+import { imageUrl } from "./lib/public-image";
 
 export function Brand() {
   return (
     <Link className="brand" to="/" aria-label="양재천 브릿지마켓 홈">
-      <img src="/favicon.svg" alt="" width="38" height="38" />
+      <img
+        src={`${import.meta.env.BASE_URL}favicon.svg`}
+        alt=""
+        width="38"
+        height="38"
+      />
       <span>
         <small>YANGJAE BRIDGE MARKET</small>
         <strong>양재천 브릿지마켓</strong>
@@ -25,38 +22,31 @@ export function Brand() {
 export function Layout({ children }: { children: ReactNode }) {
   return (
     <div className="app-shell">
-      <a className="skip-link" href="#main">
+      <a
+        className="skip-link"
+        href="#main"
+        onClick={(event) => {
+          event.preventDefault();
+          document.getElementById("main")?.focus();
+        }}
+      >
         본문으로 건너뛰기
       </a>
       <header className="site-header">
         <Brand />
-        <Link className="header-location" to="/visit" aria-label="찾아가는 길">
-          <MapPin size={20} />
-        </Link>
       </header>
-      <main id="main">{children}</main>
+      <main id="main" tabIndex={-1}>
+        {children}
+      </main>
       <footer className="site-footer">
         <p>일상 속 작은 발견, 우리 동네 마켓</p>
-        <Link to="/vendor">
-          참가 업체 관리 <ArrowUpRight size={13} />
-        </Link>
       </footer>
-      <nav className="bottom-nav" aria-label="방문객 메뉴">
-        <NavLink to="/" end>
-          <Store size={20} />
-          매대 둘러보기
-        </NavLink>
-        <NavLink to="/visit">
-          <Footprints size={20} />
-          찾아가는 길
-        </NavLink>
-      </nav>
     </div>
   );
 }
 export function Back({
   to = "/",
-  children = "매대 목록",
+  children = "매대 보기",
 }: {
   to?: string;
   children?: ReactNode;

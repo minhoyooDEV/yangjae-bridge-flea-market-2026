@@ -6,6 +6,13 @@ export const configured = Boolean(url && key);
 export const supabase = createClient(
   url || "https://not-configured.supabase.co",
   key || "not-configured",
+  {
+    auth: {
+      persistSession: false,
+      autoRefreshToken: false,
+      detectSessionInUrl: false,
+    },
+  },
 );
 export const BUCKET = "market-images";
 const samples = new Set([
@@ -15,7 +22,10 @@ const samples = new Set([
 ]);
 export function imageUrl(path: string | null | undefined) {
   if (!path) return undefined;
-  if (path.startsWith("/")) return samples.has(path) ? path : undefined;
+  if (path.startsWith("/"))
+    return samples.has(path)
+      ? `${import.meta.env.BASE_URL}${path.slice(1)}`
+      : undefined;
   return supabase.storage.from(BUCKET).getPublicUrl(path).data.publicUrl;
 }
 
@@ -38,6 +48,7 @@ export interface Product {
   booth_id: string;
   name: string;
   description: string;
+  price: number | null;
   image_path: string | null;
   thumbnail_path: string | null;
   sort_order: number;

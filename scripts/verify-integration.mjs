@@ -113,12 +113,14 @@ try {
         booth_id: boothIds[0],
         name: `검증상품 ${run}`,
         description: "등록 설명",
+        price: 12000,
       })
       .select()
       .single(),
     "create own product",
   );
   ok(Boolean(product.id), "업체 자기 상품 등록");
+  ok(product.price === 12000, "업체 상품 가격 저장");
   ok(
     (await visitor.from("products").select("id").eq("id", product.id)).data
       ?.length === 0,
@@ -139,7 +141,7 @@ try {
   required(
     await a
       .from("products")
-      .update({ description: "수정된 설명" })
+      .update({ description: "수정된 설명", price: 0 })
       .eq("id", product.id)
       .select()
       .single(),
@@ -149,6 +151,16 @@ try {
     (await visitor.from("products").select("description").eq("id", product.id))
       .data?.[0]?.description === "수정된 설명",
     "상품 수정 즉시 공개",
+  );
+  ok(
+    (await visitor.from("products").select("price").eq("id", product.id))
+      .data?.[0]?.price === 0,
+    "0원 가격 수정 즉시 공개",
+  );
+  ok(
+    (await a.from("products").update({ price: -1 }).eq("id", product.id)).error
+      ?.code === "23514",
+    "DB에서 음수 가격 거부",
   );
   required(
     await a
@@ -171,7 +183,7 @@ try {
   ok(Boolean(foreignInsert.error), "다른 업체 매대 ID로 상품 생성 차단");
   const foreignUpdate = await b
     .from("products")
-    .update({ name: "변조" })
+    .update({ name: "변조", price: 1 })
     .eq("id", product.id)
     .select();
   ok(

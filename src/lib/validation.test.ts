@@ -1,5 +1,11 @@
 import { describe, expect, it } from "vitest";
-import { isOwnedImage, validateProduct, vendorEmail } from "./validation";
+import {
+  formatPrice,
+  isOwnedImage,
+  parsePrice,
+  validateProduct,
+  vendorEmail,
+} from "./validation";
 
 describe("업체 로그인 식별자", () => {
   it("공백과 대문자를 정규화하여 연락용이 아닌 내부 주소를 만든다", () =>
@@ -31,4 +37,23 @@ describe("사진 정리 범위", () => {
     expect(isOwnedImage("booth-a/../booth-b/image.jpg", "booth-a")).toBe(false);
     expect(isOwnedImage(null, "booth-a")).toBe(false);
   });
+});
+
+describe("상품 가격", () => {
+  it("원 단위 정수와 0원, 미정 가격을 구분한다", () => {
+    expect(parsePrice(" 12000 ")).toBe(12000);
+    expect(parsePrice("0")).toBe(0);
+    expect(parsePrice(" ")).toBeNull();
+    expect(parsePrice("2147483647")).toBe(2147483647);
+    expect(formatPrice(12000)).toBe("12,000원");
+    expect(formatPrice(0)).toBe("0원");
+    expect(formatPrice(null)).toBe("가격 문의");
+    expect(formatPrice(undefined)).toBe("가격 문의");
+  });
+  it.each(["-1", "1.5", "1e3", "12,000", "abc", "2147483648"])(
+    "잘못된 가격을 거부한다: %s",
+    (value) => {
+      expect(() => parsePrice(value)).toThrow();
+    },
+  );
 });

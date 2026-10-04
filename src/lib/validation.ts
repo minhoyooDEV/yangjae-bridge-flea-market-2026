@@ -22,3 +22,15 @@ export function isOwnedImage(path: string | null, boothId: string) {
     path && path.startsWith(`${boothId}/`) && !path.includes(".."),
   );
 }
+
+export function parsePrice(value: string): number | null {
+  const text = value.trim();
+  if (!text) return null;
+  if (!/^\d+$/.test(text) || Number(text) > 2147483647)
+    throw new Error("가격은 0~2,147,483,647원 사이의 정수로 입력해 주세요.");
+  return Number(text);
+}
+
+export function formatPrice(value: number | null | undefined) {
+  return value == null ? "가격 문의" : `${value.toLocaleString("ko-KR")}원`;
+}
