@@ -2,11 +2,19 @@
 
 ## 1.x.x — 한 매대 정적 원페이지
 
-현재 버전은 **1.0.0**이다. 매대 사진 아래 상품명·가격을 표시하고, 상품을 터치하면 상세 설명 모달을 연다. 위치 안내도 같은 페이지에 표시한다. 로그인, DB 연결, 서버 API, 관리 화면은 사용하지 않는다.
+현재 버전은 **1.0.0**(완성, 2026-10-04)이다. 양재천 브릿지마켓 콜앤메이슨 매대를 찾은 현장 방문객이 QR로 열어 보는 정적 원페이지다. 로그인, DB 연결, 서버 API, 관리 화면은 사용하지 않는다.
 
-매대·상품 데이터는 [`src/data/market.ts`](src/data/market.ts)에 직접 작성한다. 콜앤메이슨 매대 페이지이며 브랜드 소개·연표·영상(YouTube)·매대 위치를 보여준다. 브랜드 정보와 영상 ID는 같은 파일의 `brand`에 있다. 상품과 가격은 플리마켓 현장 판매 정보다. `booth.is_sample`을 true로 두면 상품·가격이 예시라는 미리보기 안내가 표시된다(현재 false). 사진은 `public/brand/`에 넣고 경로를 데이터에 지정한다. 실제 매대 사진은 `public/brand/booth.jpg`처럼 넣고 `booth.image_path`에 `"/brand/booth.jpg"`를 지정하면 매대 위치 블록 위에 표시된다(`null`이면 숨김). 데이터를 바꾼 뒤 다시 배포한다.
+페이지 순서: 매대 전경 사진 → 플리마켓 기획상품(종류별로 묶고 싼 가격부터, 누르면 사진 넘기기·설명 상세 창) → 매대 위치 → 브랜드 히어로(Experts in Seasoning since 1919) → 1919년 연표 → 브랜드 영상(YouTube, 누를 때 로드). 상단 로고는 공식 홈페이지를 새 창으로 연다.
 
-이 페이지는 현장 방문객이 매대를 쉽게 찾고 둘러보도록 돕는 용도다. 스타일은 `src/styles.css`의 디자인 시스템 클래스(`.section`, `.inverse`, `.display`, `.lede`, `.hint`, `.media`, `.button`, `.timeline` 등)를 먼저 쓰고, 페이지 전용 `cm-*` 클래스는 공용 클래스로 표현할 수 없는 구성에만 쓴다.
+모든 내용은 [`src/data/market.ts`](src/data/market.ts)에 직접 작성한다.
+
+- `booth`: 매대 전경 사진(`image_path`), 위치 문구(`location_text`), 안내 문구. `is_sample`을 true로 두면 상품·가격이 예시라는 미리보기 안내가 표시된다(현재 false).
+- `products`: 상품명·종류(`category`)·플리마켓 가격·설명·대표 사진(`image_path`)·추가 사진(`gallery`). 상품명은 모델명 없이 용도 기준으로, 카드에서 한 줄(320px 기준)에 들어가게 짓는다. 사이즈·색상 변형은 묶지 않고 각각 별도 상품으로 둔다. 정렬은 `src/lib/products.ts`가 자동으로 한다.
+- `brand`: 로고·히어로·연표·영상 ID.
+
+사진은 `public/brand/`(상품은 `public/brand/products/`)에 넣는다. 아이폰 HEIC는 회전을 픽셀에 적용하고 EXIF(위치·기기 정보)를 지운 JPEG(긴 변 1200px)로 바꿔 넣는다.
+
+스타일은 `src/styles.css`의 디자인 시스템 클래스(`.section`, `.inverse`, `.display`, `.lede`, `.hint`, `.media`, `.button`, `.timeline`, `.carousel`, `.grid-2` 등)를 먼저 쓰고, 페이지 전용 `cm-*` 클래스는 공용 클래스로 표현할 수 없는 구성에만 쓴다.
 
 GitHub Pages에 배포하며 Secrets나 환경변수는 필요 없다. `.github/workflows/pages.yml`이 main push 시 테스트·빌드·배포한다. Settings → Pages → Source를 GitHub Actions로 설정한다. 비공개 저장소는 Pages 지원 요금제가 필요하며 저장소 공개 여부는 자동 변경하지 않는다.
 
