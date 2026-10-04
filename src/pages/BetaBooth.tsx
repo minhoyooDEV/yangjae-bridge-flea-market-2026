@@ -4,6 +4,7 @@ import { Empty, Photo } from "../components";
 import { booth, brand, products, type MarketProduct } from "../data/market";
 import { track } from "../lib/analytics";
 import { closeWithMotion, expandOpen } from "../lib/dialog-motion";
+import { createDwellTimer, toSeconds } from "../lib/dwell";
 import { groupByCategory } from "../lib/products";
 import { imageUrl } from "../lib/public-image";
 import { formatPrice } from "../lib/validation";
@@ -28,6 +29,8 @@ export function BetaBooth() {
     };
   }, [selected]);
 
+  useProductDwell(selected);
+
   return (
     <div className="cm-page">
       <section className="cm-booth" aria-labelledby="page-title">
@@ -41,6 +44,7 @@ export function BetaBooth() {
             className="media landscape"
             eager
             zoom
+            onZoom={() => track("booth_photo_zoomed")}
           />
         )}
       </section>
@@ -62,12 +66,7 @@ export function BetaBooth() {
                     onClick={(event) => {
                       opener.current = event.currentTarget;
                       setSelected(product);
-                      track("product_viewed", {
-                        product_id: product.id,
-                        product_name: product.name,
-                        category: product.category,
-                        price: product.price,
-                      });
+                      track("product_viewed", productProperties(product));
                     }}
                   >
                     <Photo
@@ -231,6 +230,42 @@ export function BetaBooth() {
       )}
     </div>
   );
+}
+
+function productProperties(product: MarketProduct) {
+  return {
+    product_id: product.id,
+    product_name: product.name,
+    category: product.category,
+    price: product.price,
+  };
+}
+
+// Sends how long the product detail stayed visible, once, when it closes or
+// the page goes away with it still open.
+function useProductDwell(product: MarketProduct | null) {
+  useEffect(() => {
+    if (!product) return;
+    const timer = createDwellTimer();
+    let sent = false;
+    const send = () => {
+      if (sent) return;
+      sent = true;
+      track("product_view_ended", {
+        ...productProperties(product),
+        dwell_seconds: toSeconds(timer.stop()),
+      });
+    };
+    const onVisibility = () =>
+      document.hidden ? timer.pause() : timer.resume();
+    document.addEventListener("visibilitychange", onVisibility);
+    window.addEventListener("pagehide", send);
+    return () => {
+      document.removeEventListener("visibilitychange", onVisibility);
+      window.removeEventListener("pagehide", send);
+      send();
+    };
+  }, [product]);
 }
 
 // Loads the YouTube player only after a tap, so the page stays light on mobile data.

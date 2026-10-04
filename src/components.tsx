@@ -119,12 +119,14 @@ export function Photo({
   className = "",
   eager = false,
   zoom = false,
+  onZoom,
 }: {
   path: string | null | undefined;
   alt: string;
   className?: string;
   eager?: boolean;
   zoom?: boolean;
+  onZoom?: () => void;
 }) {
   const [failed, setFailed] = useState(false);
   const dialog = useRef<HTMLDialogElement>(null);
@@ -162,6 +164,7 @@ export function Photo({
             element.querySelector("img"),
             close ? [close] : [],
           );
+          onZoom?.();
         }}
         aria-label={`${alt} 크게 보기`}
       >

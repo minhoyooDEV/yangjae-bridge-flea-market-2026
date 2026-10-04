@@ -2,13 +2,14 @@
 
 ## 1.x.x — 한 매대 정적 원페이지
 
-현재 버전은 **1.4.0**이다. 변경할 때마다 버전을 올린다(새 기능·섹션은 minor, 문구·상품·사진·버그 수정은 patch). `package.json` 버전을 올리고 같은 커밋에 `vX.Y.Z` 태그를 단다.
+현재 버전은 **1.5.0**이다. 변경할 때마다 버전을 올린다(새 기능·섹션은 minor, 문구·상품·사진·버그 수정은 patch). `package.json` 버전을 올리고 같은 커밋에 `vX.Y.Z` 태그를 단다.
 
 - 1.0.0 (2026-10-04): 콜앤메이슨 매대 페이지 완성
 - 1.1.0: `design/quiet-kitchen`의 톤·소재 섹션·Tom Hunt 영상 카드 반영
 - 1.2.0: PostHog 방문 분석과 제작자 모드
 - 1.3.0: 모달 열림 트랜지션(누른 사진이 커지며 열림, 내용은 뒤따라 스며듦, 닫힘은 제자리 페이드)
 - 1.4.0: PostHog 오류 추적(처리되지 않은 예외)과 이벤트 구조화 로그
+- 1.5.0: 매대 사진 확대 이벤트, 상품 상세 체류 시간 측정
 
 양재천 브릿지마켓 콜앤메이슨 매대를 찾은 현장 방문객이 QR로 열어 보는 정적 원페이지다. 로그인, DB 연결, 서버 API, 관리 화면은 사용하지 않는다.
 
@@ -26,7 +27,7 @@
 
 ### 방문 분석 (PostHog)
 
-PostHog(US 클라우드)로 페이지뷰·웹 분석·세션 리플레이를 수집한다. 프로젝트 키는 코드에 두지 않고 저장소 시크릿 `POSTHOG_KEY`로 관리한다. 배포 워크플로가 빌드 때 `VITE_POSTHOG_KEY`로 넘기며, 값이 없으면 분석이 꺼진다(로컬 빌드 포함). 키를 바꿀 때는 `gh secret set POSTHOG_KEY`로 갱신하고 다시 배포한다. 로컬 개발(`pnpm dev`)은 이벤트를 보내지 않는다. 직접 보내는 이벤트: `product_viewed`(상품 상세 열기), `brand_film_played`, `series_opened`, `official_site_opened`(로고). 1.4.0부터 처리되지 않은 예외와 Promise 거부를 Error Tracking으로 보내고(콘솔 오류는 제외, 분석 코드가 로드된 뒤부터), 위 이벤트를 같은 이름의 구조화 로그로도 남긴다(서비스 `yangjae-bridge-flea-market-web`, 버전은 `package.json`, 제작자 방문은 `is_creator=true`).
+PostHog(US 클라우드)로 페이지뷰·웹 분석·세션 리플레이를 수집한다. 프로젝트 키는 코드에 두지 않고 저장소 시크릿 `POSTHOG_KEY`로 관리한다. 배포 워크플로가 빌드 때 `VITE_POSTHOG_KEY`로 넘기며, 값이 없으면 분석이 꺼진다(로컬 빌드 포함). 키를 바꿀 때는 `gh secret set POSTHOG_KEY`로 갱신하고 다시 배포한다. 로컬 개발(`pnpm dev`)은 이벤트를 보내지 않는다. 직접 보내는 이벤트: `product_viewed`(상품 상세 열기), `brand_film_played`, `series_opened`, `official_site_opened`(로고), `booth_photo_zoomed`(매대 전경 사진 크게 보기), `product_view_ended`(상품 상세를 닫거나 페이지를 떠날 때, `dwell_seconds`에 화면에 보인 초. 다른 탭에 가 있던 시간은 빼고 잰다). 1.4.0부터 처리되지 않은 예외와 Promise 거부를 Error Tracking으로 보내고(콘솔 오류는 제외, 분석 코드가 로드된 뒤부터), 위 이벤트를 같은 이름의 구조화 로그로도 남긴다(서비스 `yangjae-bridge-flea-market-web`, 버전은 `package.json`, 제작자 방문은 `is_creator=true`).
 
 제작자 방문 구분: 내 휴대폰·PC에서 주소 끝에 `?creator=on`을 붙여 한 번 열면 그 브라우저가 기억한다. 이후 그 브라우저의 모든 이벤트에 `is_creator=true`가 붙고 세션 리플레이는 녹화하지 않으며, 헤더에 "제작자 모드" 표시가 보인다. 표시를 누르거나 `?creator=off`로 열면 해제된다. 브라우저 저장소를 지우면 다시 켜야 한다. PostHog에서 Settings → Project → Product analytics → "Filter out internal and test users"에 이벤트 속성 `is_creator` = `true`를 추가하면 인사이트·웹 분석에서 제작자 방문을 뺄 수 있다.
 
