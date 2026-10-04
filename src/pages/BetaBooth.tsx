@@ -128,6 +128,19 @@ export function BetaBooth() {
           ))}
         </ol>
       </section>
+      <section className="section" aria-labelledby="materials-title">
+        <h2 id="materials-title">손에 닿는 세 가지 소재</h2>
+        <ul className="list-plain trio">
+          {brand.materials.map((material) => (
+            <li key={material.name}>
+              <span className="latin" lang="en">
+                {material.name}
+              </span>
+              <span>{material.text}</span>
+            </li>
+          ))}
+        </ul>
+      </section>
       <section id="brand-film" className="section" aria-labelledby="film-title">
         <h2 id="film-title">영상으로 만나보세요</h2>
         <BrandFilm />
@@ -139,6 +152,28 @@ export function BetaBooth() {
         >
           유튜브에서 보기
           <ExternalLink size={14} aria-hidden="true" />
+        </a>
+        <h3 className="cm-series-title" lang="en">
+          {brand.series.title}
+        </h3>
+        <p className="lede">{brand.series.description}</p>
+        <a
+          className="cm-series"
+          href={brand.series.url}
+          target="_blank"
+          rel="noreferrer"
+          aria-label="Tom Hunt 공식 요리 영상 시리즈 보기 (새 창)"
+        >
+          <Photo
+            path={brand.series.image_path}
+            alt="Tom Hunt가 리크 타르트를 들고 있는 영상 대표 이미지"
+            className="media square"
+          />
+          <span className="cm-series-label">
+            <Play size={18} aria-hidden="true" />
+            공식 영상 시리즈 보기
+            <ExternalLink size={14} aria-hidden="true" />
+          </span>
         </a>
       </section>
       {selected && (

@@ -37,6 +37,18 @@ export const brand = {
     title: "Cole & Mason — Experts in Seasoning since 1919",
     poster_path: "/brand/video-poster.jpg",
   },
+  materials: [
+    { name: "WOOD", text: "원목의 온기" },
+    { name: "ACRYLIC", text: "투명한 디테일" },
+    { name: "STEEL", text: "정제된 질감" },
+  ],
+  series: {
+    title: "The Art of Seasoning",
+    description:
+      "셰프 Tom Hunt와 함께하는 요리 이야기. 제철 재료와 소금, 후추가 만나는 순간에서 식탁의 영감을 찾아보세요.",
+    url: "https://coleandmason.com/pages/the-art-of-seasoning-tom-hunt",
+    image_path: "/brand/tom-hunt.jpg",
+  },
   website: "https://coleandmason.co.kr/",
 };
 
