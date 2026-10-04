@@ -1,8 +1,9 @@
 import type { PostHog } from "posthog-js";
 import { readCreator } from "./creator";
 
-// PostHog project API key (public, safe to ship in the bundle). Empty disables analytics.
-const POSTHOG_KEY = "phc_ucZAPnQVs5FqCdjFcUC9Z6j4pZ9m4RAfBkpZGmVjjPiT";
+// PostHog project key, injected at build time from the POSTHOG_KEY repository
+// secret (see .github/workflows/pages.yml). Unset disables analytics.
+const POSTHOG_KEY = import.meta.env.VITE_POSTHOG_KEY ?? "";
 const POSTHOG_HOST = "https://us.i.posthog.com";
 
 export const isCreator = readCreator();

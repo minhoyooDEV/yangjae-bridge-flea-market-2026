@@ -33,6 +33,7 @@ jobs:
       - name: Build
         env:
           PAGES_BASE_PATH: ${{ steps.pages.outputs.base_path }}
+          VITE_POSTHOG_KEY: ${{ secrets.POSTHOG_KEY }}
         run: |
           npm run build
           rm -f dist/_headers dist/_redirects
