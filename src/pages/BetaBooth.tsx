@@ -48,10 +48,7 @@ export function BetaBooth() {
         </div>
       </section>
       {booth.is_sample && (
-        <p className="sample-note">
-          미리보기 · 상품과 가격은 공식몰 기준 예시이며 현장 판매 정보는 준비
-          중이에요.
-        </p>
+        <p className="sample-note">미리보기 · 상품과 가격은 예시예요.</p>
       )}
       <section className="section" aria-labelledby="products-title">
         <h2 id="products-title">플리마켓 기획상품</h2>

@@ -47,7 +47,7 @@ export const booth = {
   // 실제 매대 사진: public/brand/에 넣고 "/brand/booth.jpg"처럼 지정. null이면 숨김.
   image_path: null as string | null,
   location_text: "계단 위 · 정확한 매대 위치는 준비 중이에요.",
-  is_sample: true,
+  is_sample: false,
 };
 
 export const products: MarketProduct[] = [
@@ -74,53 +74,5 @@ export const products: MarketProduct[] = [
       "/brand/products/salt-pepper-brown-03.jpg",
       "/brand/products/salt-pepper-brown-02.jpg",
     ],
-  },
-  {
-    id: "london-set-beech",
-    name: "런던 소금·후추 그라인더 세트 내추럴 비치",
-    price: 82000,
-    description:
-      "2023년에 나온 런던 시리즈의 소금·후추 그라인더 한 쌍이에요. 밝은 너도밤나무 결이 식탁을 부드럽게 만들어 줘요.\n가격은 공식몰 판매가 기준 예시예요. 현장 가격은 매대에서 확인해 주세요.",
-    image_path: "/brand/products/london-set-beech.jpg",
-  },
-  {
-    id: "london-set-chocolate",
-    name: "런던 소금·후추 그라인더 세트 다크 초콜릿",
-    price: 82000,
-    description:
-      "런던 시리즈 소금·후추 그라인더 한 쌍을 짙은 초콜릿 색 나무로 만났어요. 선물 상자에 담겨 있어요.\n가격은 공식몰 판매가 기준 예시예요. 현장 가격은 매대에서 확인해 주세요.",
-    image_path: "/brand/products/london-set-chocolate.jpg",
-  },
-  {
-    id: "london-set-gloss-black",
-    name: "런던 소금·후추 그라인더 세트 글로스 블랙",
-    price: 98000,
-    description:
-      "광택 있는 블랙 마감의 런던 시리즈 소금·후추 그라인더 한 쌍이에요. 선물 상자에 담겨 있어요.\n가격은 공식몰 판매가 기준 예시예요. 현장 가격은 매대에서 확인해 주세요.",
-    image_path: "/brand/products/london-set-gloss-black.jpg",
-  },
-  {
-    id: "london-pepper-acrylic",
-    name: "런던 후추 그라인더 아크릴",
-    price: 44000,
-    description:
-      "안에 담긴 통후추가 보이는 투명 아크릴 런던 그라인더예요. 1975년 세계 최초로 아크릴 그라인더를 만든 콜앤메이슨의 대표 소재예요.\n가격은 공식몰 판매가 기준 예시예요. 현장 가격은 매대에서 확인해 주세요.",
-    image_path: "/brand/products/london-pepper-acrylic.jpg",
-  },
-  {
-    id: "kenton",
-    name: "켄톤 소금·후추 겸용 그라인더",
-    price: 33000,
-    description:
-      "소금과 후추 어느 쪽에도 쓸 수 있는 켄톤 그라인더예요. 처음 그라인더를 들이는 분께 권해요.\n가격은 공식몰 판매가 기준 예시예요. 현장 가격은 매대에서 확인해 주세요.",
-    image_path: "/brand/products/kenton.jpg",
-  },
-  {
-    id: "refill-funnel",
-    name: "스테인리스 리필 퍼널",
-    price: 16000,
-    description:
-      "그라인더에 통후추나 소금을 흘리지 않고 채우는 스테인리스 깔때기예요.\n가격은 공식몰 판매가 기준 예시예요. 현장 가격은 매대에서 확인해 주세요.",
-    image_path: "/brand/products/refill-funnel.jpg",
   },
 ];
