@@ -1,42 +1,27 @@
 {
-  "name": "yangjae-bridge-flea-market-2026",
+  "name": "yangjae-bridge-monorepo",
   "private": true,
-  "version": "1.5.0",
+  "version": "1.6.0",
   "type": "module",
-  "scripts": {
-    "dev": "vite --host 127.0.0.1",
-    "build": "tsc -b && vite build",
-    "preview": "vite preview --host 127.0.0.1",
-    "test": "vitest run",
-    "test:integration": "node --env-file=.env.local scripts/verify-integration.mjs",
-    "vendor:create": "node --env-file=.env.local scripts/create-vendor.mjs",
-    "vendor:reset": "node --env-file=.env.local scripts/reset-vendor-password.mjs",
-    "images:check": "node --env-file=.env.local scripts/cleanup-images.mjs",
-    "format:check": "prettier --check src scripts vite.config.ts tsconfig.json package.json index.html",
-    "package:pages": "pnpm run build && python3 scripts/package-pages.py"
-  },
-  "dependencies": {
-    "@supabase/supabase-js": "^2.117.2",
-    "lucide-react": "^1.51.0",
-    "posthog-js": "^1.435.8",
-    "react": "^19.3.0",
-    "react-dom": "^19.3.0",
-    "react-router-dom": "^7.18.4"
-  },
-  "devDependencies": {
-    "@types/node": "^26.6.4",
-    "@types/react": "^19.3.0",
-    "@types/react-dom": "^19.3.0",
-    "@vitejs/plugin-react": "^6.1.1",
-    "prettier": "^3.9.9",
-    "qrcode": "^1.5.4",
-    "supabase": "^2.119.0",
-    "typescript": "^7.0.2",
-    "vite": "^8.3.2",
-    "vitest": "^5.0.3"
-  },
+  "packageManager": "pnpm@12.9.1",
   "engines": {
     "node": ">=24.0.0"
   },
-  "packageManager": "pnpm@12.9.1"
+  "scripts": {
+    "dev": "pnpm films:sync && pnpm --filter @yangjae/web dev",
+    "build": "pnpm films:sync && pnpm --filter @yangjae/web build",
+    "preview": "pnpm --filter @yangjae/web preview",
+    "films:sync": "node scripts/sync-films.mjs",
+    "film:render": "pnpm --filter @yangjae/herb-film render && pnpm films:sync",
+    "film:preview": "pnpm --filter @yangjae/herb-film preview",
+    "film:check": "pnpm --filter @yangjae/herb-film check",
+    "test": "node --test scripts/sync-films.test.mjs && pnpm --filter @yangjae/web test",
+    "format:check": "pnpm --filter @yangjae/web exec prettier --check src scripts vite.config.ts tsconfig.json package.json index.html ../../package.json ../../pnpm-workspace.yaml ../../scripts ../../packages/herb-film/package.json ../../.github/workflows",
+    "package:pages": "pnpm build && pnpm --filter @yangjae/web package:pages",
+    "qr": "pnpm --filter @yangjae/web qr",
+    "vendor:create": "pnpm --filter @yangjae/web vendor:create",
+    "vendor:reset": "pnpm --filter @yangjae/web vendor:reset",
+    "images:check": "pnpm --filter @yangjae/web images:check",
+    "test:integration": "pnpm --filter @yangjae/web test:integration"
+  }
 }

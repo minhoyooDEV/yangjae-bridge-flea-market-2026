@@ -1,0 +1,40 @@
+.herb-film {
+  margin-block: 1.5rem;
+  padding-block: 1.5rem;
+  border-block: 1px solid #dcded3;
+  color: #293d31;
+}
+.herb-film .herb-film-eyebrow {
+  margin: 0 0 0.5rem;
+  color: #766449;
+  font-size: 0.65rem;
+  letter-spacing: 0.15em;
+}
+.herb-film h3 {
+  margin: 0;
+  font-size: 1.25rem;
+}
+.herb-film > p {
+  font-size: 0.85rem;
+  line-height: 1.7;
+}
+.herb-film video {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 16 / 9;
+  border-radius: 0.5rem;
+  background: #2e4538;
+}
+.herb-film details {
+  margin-top: 1rem;
+  font-size: 0.8rem;
+  line-height: 1.8;
+}
+.herb-film summary {
+  cursor: pointer;
+}
+.herb-film :focus-visible {
+  outline: 2px solid #486148;
+  outline-offset: 4px;
+}

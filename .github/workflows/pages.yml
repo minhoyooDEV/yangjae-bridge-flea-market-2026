@@ -37,11 +37,11 @@ jobs:
           VITE_POSTHOG_KEY: ${{ secrets.POSTHOG_KEY }}
         run: |
           pnpm run build
-          rm -f dist/_headers dist/_redirects
-          touch dist/.nojekyll
+          rm -f apps/web/dist/_headers apps/web/dist/_redirects
+          touch apps/web/dist/.nojekyll
       - uses: actions/upload-pages-artifact@v3
         with:
-          path: dist
+          path: apps/web/dist
 
   deploy:
     needs: build

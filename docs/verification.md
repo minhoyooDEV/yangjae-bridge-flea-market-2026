@@ -1,3 +1,16 @@
+## 2026-10-05 모노레포 전환 검증
+
+- 기준: 배포 소스 `5463da2`, 작업 브랜치 `refactor/web-film-monorepo`.
+- `apps/web`과 `packages/herb-film`, 루트 pnpm workspace 및 단일 잠금 파일로 통합.
+- `pnpm install --frozen-lockfile`, `pnpm format:check`, `git diff --check` 통과.
+- `pnpm test`: 웹 31개 + 영상 복사 2개, 총 33개 통과.
+- `pnpm film:render`: 이동된 소스에서 MP4·포스터를 재생성하고 웹 복사 완료.
+- `pnpm film:check`: 30초 / 1280×720 / 30fps / H.264 + AAC, 전체 디코딩 통과.
+- `PAGES_BASE_PATH=/yangjae-bridge-flea-market-2026 pnpm build` 통과. 빌드 영상·포스터·미리보기의 SHA-256이 원본과 일치.
+- 루트 `pnpm dev --port 4178 --strictPort` 실행 후 Chrome에서 1구 상품 상세 확인. 영상이 30초까지 재생되어 `ended=true`, `error=null`인 상태를 확인.
+- GitHub Pages workflow의 artifact 경로를 `apps/web/dist`로 수정. 푸시·원격 배포는 실행하지 않음.
+- 아래는 이전 개발 단계의 역사적 기록이며 현재 릴리스의 배포 상태를 뜻하지 않는다.
+
 # 검증 기록
 
 > 과거 다중 매대·업체 로그인 설계 및 검증 기록입니다. 현재 1.x.x는 하드코딩 데이터만 사용하는 정적 원페이지이며 DB·로그인·업체 관리는 2.x.x로 보류합니다. 현재 범위는 README.md와 beta-workflow.md를 따릅니다.

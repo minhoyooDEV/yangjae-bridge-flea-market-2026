@@ -9,3 +9,4 @@ dist/
 .wrangler/
 *.tsbuildinfo
 coverage/
+apps/web/public/films/

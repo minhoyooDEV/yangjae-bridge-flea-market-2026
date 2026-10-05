@@ -1,0 +1,11 @@
+{
+  "name": "@yangjae/herb-film",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "render": "bash scripts/render.sh",
+    "preview": "python3 -m http.server 4179 --bind 127.0.0.1 --directory assets",
+    "check": "python3 scripts/check.py"
+  }
+}
