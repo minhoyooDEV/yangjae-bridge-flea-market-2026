@@ -1,7 +1,7 @@
 {
   "name": "yangjae-bridge-monorepo",
   "private": true,
-  "version": "1.6.0",
+  "version": "1.7.0",
   "type": "module",
   "packageManager": "pnpm@12.9.1",
   "engines": {
@@ -15,13 +15,14 @@
     "film:render": "pnpm --filter @yangjae/herb-film render && pnpm films:sync",
     "film:preview": "pnpm --filter @yangjae/herb-film preview",
     "film:check": "pnpm --filter @yangjae/herb-film check",
-    "test": "node --test scripts/sync-films.test.mjs && pnpm --filter @yangjae/web test",
+    "test": "pnpm rules:check && node --test scripts/*.test.mjs && pnpm --filter @yangjae/web test",
     "format:check": "pnpm --filter @yangjae/web exec prettier --check src scripts vite.config.ts tsconfig.json package.json index.html ../../package.json ../../pnpm-workspace.yaml ../../scripts ../../packages/herb-film/package.json ../../.github/workflows",
     "package:pages": "pnpm build && pnpm --filter @yangjae/web package:pages",
     "qr": "pnpm --filter @yangjae/web qr",
     "vendor:create": "pnpm --filter @yangjae/web vendor:create",
     "vendor:reset": "pnpm --filter @yangjae/web vendor:reset",
     "images:check": "pnpm --filter @yangjae/web images:check",
-    "test:integration": "pnpm --filter @yangjae/web test:integration"
+    "test:integration": "pnpm --filter @yangjae/web test:integration",
+    "rules:check": "node scripts/check-project-rules.mjs"
   }
 }
