@@ -164,7 +164,9 @@ settings:
 
 importers:
 
-  .:
+  .: {}
+
+  apps/web:
     dependencies:
       '@supabase/supabase-js':
         specifier: ^2.117.2
@@ -197,6 +199,9 @@ importers:
       '@vitejs/plugin-react':
         specifier: ^6.1.1
         version: 6.1.1(vite@8.3.2(@types/node@26.6.4))
+      '@yangjae/herb-film':
+        specifier: workspace:*
+        version: link:../../packages/herb-film
       prettier:
         specifier: ^3.9.9
         version: 3.9.9
@@ -215,6 +220,8 @@ importers:
       vitest:
         specifier: ^5.0.3
         version: 5.0.3(@types/node@26.6.4)(vite@8.3.2(@types/node@26.6.4))
+
+  packages/herb-film: {}
 
 packages:
 

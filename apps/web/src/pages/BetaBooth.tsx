@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { ExternalLink, MapPin, Play, X } from "lucide-react";
 import { Empty, Photo } from "../components";
+import { HerbKeeperFilm } from "../HerbKeeperFilm";
 import { booth, brand, products, type MarketProduct } from "../data/market";
 import { track } from "../lib/analytics";
 import { closeWithMotion, expandOpen } from "../lib/dialog-motion";
@@ -221,6 +222,7 @@ export function BetaBooth() {
             <X />
           </button>
           <ProductPhotos product={selected} />
+          {selected.id === "burwell-herb-keeper-single" && <HerbKeeperFilm />}
           <h2 id="product-title">{selected.name}</h2>
           <p className="product-dialog-price">{formatPrice(selected.price)}</p>
           <p id="product-description">
