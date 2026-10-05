@@ -2,15 +2,16 @@ import { useEffect, useRef, useState } from "react";
 import { ExternalLink, MapPin, Play, X } from "lucide-react";
 import { Empty, Photo } from "../components";
 import { HerbKeeperFilm } from "../HerbKeeperFilm";
-import { booth, brand, products, type MarketProduct } from "../data/market";
+import type { Market, MarketBrand, MarketProduct } from "../data/market";
 import { track } from "../lib/analytics";
 import { closeWithMotion, expandOpen } from "../lib/dialog-motion";
 import { createDwellTimer, toSeconds } from "../lib/dwell";
 import { groupByCategory } from "../lib/products";
-import { imageUrl } from "../lib/public-image";
+import { imageUrl } from "../lib/supabase";
 import { formatPrice } from "../lib/validation";
 
-export function BetaBooth() {
+export function BetaBooth({ market }: { market: Market }) {
+  const { booth, brand, products } = market;
   const [selected, setSelected] = useState<MarketProduct | null>(null);
   const dialog = useRef<HTMLDialogElement>(null);
   const opener = useRef<HTMLButtonElement | null>(null);
@@ -155,7 +156,7 @@ export function BetaBooth() {
       </section>
       <section id="brand-film" className="section" aria-labelledby="film-title">
         <h2 id="film-title">영상으로 만나보세요</h2>
-        <BrandFilm />
+        <BrandFilm brand={brand} />
         <a
           className="text-button"
           href={`https://www.youtube.com/watch?v=${brand.video.youtube_id}`}
@@ -271,7 +272,7 @@ function useProductDwell(product: MarketProduct | null) {
 }
 
 // Loads the YouTube player only after a tap, so the page stays light on mobile data.
-function BrandFilm() {
+function BrandFilm({ brand }: { brand: MarketBrand }) {
   const [playing, setPlaying] = useState(false);
   const { youtube_id, title, poster_path } = brand.video;
   if (playing)
