@@ -77,7 +77,7 @@ try {
       execFileSync(
         "node",
         [
-          "--env-file=.env.local",
+          "--env-file=../../.env.local",
           "scripts/reset-vendor-password.mjs",
           "--login-id",
           loginId,

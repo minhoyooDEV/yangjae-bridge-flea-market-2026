@@ -101,17 +101,17 @@
 
 | 파일 | 역할 |
 | --- | --- |
-| `src/data/market.ts` | 매대 정보, 상품명·원화 가격·설명. 현재 상품 3개와 가격은 예시 |
-| `src/pages/BetaBooth.tsx` | 원페이지 및 네이티브 dialog 상세 모달 |
-| `src/App.tsx` | 홈 라우트 및 나머지 해시 경로의 홈 리다이렉트 |
-| `src/components.tsx` | 브랜드·사진·기본 레이아웃. 로그인/관리/별도 메뉴 없음 |
-| `src/lib/public-image.ts` | BASE_URL을 적용한 로컬 이미지 경로 |
-| `src/lib/market-data.ts`, `src/lib/market-rows.ts` | 2.0.0 Supabase 읽기와 행→화면 데이터 변환 |
-| `supabase/migrations/` | DB 스키마·시드 (`scripts/seed-sql.mjs`가 시드 SQL 생성) |
-| `vite.config.ts` | PAGES_BASE_PATH를 이용한 프로젝트 하위 경로 지원 |
-| `.github/workflows/pages.yml` | 키 없이 수행하는 Pages 자동 배포 |
+| `apps/web/src/data/market.ts` | 화면 데이터 타입과 Supabase 시드 원본 (2.0.0부터 화면은 DB를 읽음) |
+| `apps/web/src/pages/BetaBooth.tsx` | 원페이지 및 네이티브 dialog 상세 모달 |
+| `apps/web/src/App.tsx` | 홈 라우트 및 나머지 해시 경로의 홈 리다이렉트 |
+| `apps/web/src/components.tsx` | 브랜드·사진·기본 레이아웃. 로그인/관리/별도 메뉴 없음 |
+| `apps/web/src/lib/public-image.ts` | BASE_URL을 적용한 로컬 이미지 경로 |
+| `apps/web/src/lib/market-data.ts`, `apps/web/src/lib/market-rows.ts` | 2.0.0 Supabase 읽기와 행→화면 데이터 변환 |
+| `supabase/migrations/` | DB 스키마·시드 (`apps/web/scripts/seed-sql.mjs`가 시드 SQL 생성) |
+| `apps/web/vite.config.ts` | PAGES_BASE_PATH를 이용한 프로젝트 하위 경로 지원 |
+| `.github/workflows/pages.yml` | Pages 자동 배포 (POSTHOG_KEY, SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY 시크릿 사용) |
 
-2.0.0부터 판매 정보는 Supabase `public.products`·`public.booths`를 고친다(`src/data/market.ts`는 시드 원본). 사진은 `public/` 아래에 보관한다. 실제 데이터로 교체한 뒤에만 `booth.is_sample=false`로 바꾼다. `price=0`은 ‘0원’, null은 ‘가격 문의’다.
+2.0.0부터 판매 정보는 Supabase `public.products`·`public.booths`를 고친다(`apps/web/src/data/market.ts`는 시드 원본). 사진은 `apps/web/public/` 아래에 보관한다. 실제 데이터로 교체한 뒤에만 `booth.is_sample=false`로 바꾼다. `price=0`은 ‘0원’, null은 ‘가격 문의’다.
 
 ## 이미 완료한 검증
 

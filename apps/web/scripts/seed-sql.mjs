@@ -1,6 +1,6 @@
 // Prints SQL that loads src/data/market.ts into public.booths/products.
 // Used once to write the 2.0.0 seed migration:
-//   node scripts/seed-sql.mjs > supabase/migrations/202610050002_seed_cole_and_mason.sql
+//   node apps/web/scripts/seed-sql.mjs > supabase/migrations/202610050002_seed_cole_and_mason.sql
 import { booth, brand, products } from "../src/data/market.ts";
 
 export const BOOTH_ID = "c01e0000-0000-4000-8000-000000000001";
