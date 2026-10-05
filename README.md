@@ -2,7 +2,7 @@
 
 ## 한 매대 원페이지
 
-현재 버전은 **2.0.0**이다. 변경할 때마다 버전을 올린다(새 기능·섹션은 minor, 문구·상품·사진·버그 수정은 patch). `apps/web/package.json`과 루트 `package.json` 버전을 함께 올리고 PR 병합 후 main의 릴리스 커밋에 `vX.Y.Z` 태그를 단다.
+현재 버전은 **2.0.1**이다. 변경할 때마다 버전을 올린다(새 기능·섹션은 minor, 문구·상품·사진·버그 수정은 patch). `apps/web/package.json`과 루트 `package.json` 버전을 함께 올리고 PR 병합 후 main의 릴리스 커밋에 `vX.Y.Z` 태그를 단다.
 
 - 1.0.0 (2026-10-04): 콜앤메이슨 매대 페이지 완성
 - 1.1.0: `design/quiet-kitchen`의 톤·소재 섹션·Tom Hunt 영상 카드 반영
@@ -12,6 +12,7 @@
 - 1.5.0: 매대 사진 확대 이벤트, 상품 상세 체류 시간 측정
 - 1.6.0: 웹·영상 pnpm 모노레포, 허브 키퍼 1구 설명 영상
 - 2.0.0: 매대·브랜드·상품 데이터를 Supabase에서 읽음(내용과 화면은 1.6.0과 같음)
+- [2.0.1](docs/releases/2.0.1.md): AGENTS.md·CLAUDE.md 동기화, 버전별 릴리스 노트 필수 검사
 
 양재천 브릿지마켓 콜앤메이슨 매대를 찾은 현장 방문객이 QR로 열어 보는 원페이지다. 2.0.0부터 내용은 Supabase DB에서 읽는다. 로그인과 관리 화면은 아직 없다.
 
@@ -91,3 +92,5 @@ pnpm film:check    # MP4 메타데이터와 전체 디코딩 검사 (FFmpeg 필�
 ## 작업·병합 규칙
 
 [AGENTS.md](AGENTS.md)를 따른다. main에 직접 푸시하지 않고 작업 브랜치 → PR → 검사 통과 → 병합 순서로 진행한다. PR checks는 테스트·포맷·빌드를 검증하며, Pages 배포는 main 병합 후에만 실행한다.
+
+규칙 수정 시 `AGENTS.md`와 `CLAUDE.md`를 동일하게 수정한다. 버전을 올릴 때 같은 PR에 `docs/releases/<버전>.md`를 작성하고 `pnpm rules:check`를 통과해야 한다. `pnpm test`에도 이 검사가 포함된다.
