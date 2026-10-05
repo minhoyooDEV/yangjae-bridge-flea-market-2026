@@ -1,12 +1,12 @@
 import { useEffect, useRef, useState, type ReactNode } from "react";
 import { Link } from "react-router-dom";
 import { ArrowLeft, ImageOff, Store, X } from "lucide-react";
-import { brand } from "./data/market";
+import type { MarketBrand } from "./data/market";
 import { isCreator, track } from "./lib/analytics";
 import { closeWithMotion, expandOpen } from "./lib/dialog-motion";
-import { imageUrl } from "./lib/public-image";
+import { imageUrl } from "./lib/supabase";
 
-export function Brand() {
+export function Brand({ brand }: { brand: MarketBrand }) {
   return (
     <a
       className="brand"
@@ -25,7 +25,13 @@ export function Brand() {
     </a>
   );
 }
-export function Layout({ children }: { children: ReactNode }) {
+export function Layout({
+  brand,
+  children,
+}: {
+  brand?: MarketBrand;
+  children: ReactNode;
+}) {
   return (
     <div className="app-shell">
       <a
@@ -39,7 +45,7 @@ export function Layout({ children }: { children: ReactNode }) {
         본문으로 건너뛰기
       </a>
       <header className="site-header">
-        <Brand />
+        {brand && <Brand brand={brand} />}
         {isCreator && (
           <a
             className="creator-badge"

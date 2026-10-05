@@ -35,6 +35,8 @@ jobs:
         env:
           PAGES_BASE_PATH: ${{ steps.pages.outputs.base_path }}
           VITE_POSTHOG_KEY: ${{ secrets.POSTHOG_KEY }}
+          VITE_SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          VITE_SUPABASE_PUBLISHABLE_KEY: ${{ secrets.SUPABASE_PUBLISHABLE_KEY }}
         run: |
           pnpm run build
           rm -f apps/web/dist/_headers apps/web/dist/_redirects
