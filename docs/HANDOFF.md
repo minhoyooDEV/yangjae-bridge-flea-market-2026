@@ -36,9 +36,9 @@
 
 ### 2.x.x
 
-Supabase 설정 자체, DB·Storage 연결, 로그인·계정, 업체 관리 및 상품 편집은 모두 향후 범위다. 현재 연결을 준비하거나 마이그레이션을 적용하지 않는다.
+2.0.0(2026-10-05): 페이지 데이터를 Supabase(`sgxnccckhweykhautotb`)에서 읽는다. 마이그레이션 `202610040001`(가격), `202610050001`(공개 콘텐츠 컬럼: `booths.market_name`·`brand`, `products.slug`·`category`·`gallery`, `/brand/%` 이미지 경로 허용), `202610050002`(1.5.0 내용 시드, 샘플 매대 비활성화)를 원격에 적용했다. 브라우저는 공개 키로 RLS 공개 읽기만 한다. 1.x 차단 모듈 `backend-access.ts`는 제거했다.
 
-기존 코드는 향후 참고용으로 남아 있다. `src/lib/backend-access.ts`가 `src/lib/supabase.ts`와 `scripts/admin-client.mjs` import 시 오류를 발생시켜 접근을 막는다. 환경변수로 해제하는 옵션은 없다. 클라우드 환경에 남아 있는 과거 Supabase 변수·비밀 값 요구사항은 1.x.x의 필수 조건이 아니다. 원격 Supabase 프로젝트·데이터·Auth 설정은 변경하지 않았다.
+로그인·계정, 업체 관리, 상품 편집·사진 업로드는 이후 2.x 범위다. Auth 설정과 쓰기 권한 검증은 그때 다시 한다.
 
 ## 최신 배포 상태와 실패 이력
 
@@ -93,7 +93,7 @@ Supabase 설정 자체, DB·Storage 연결, 로그인·계정, 업체 관리 및
 - 매대 사진, 상품명·가격, 상품 상세 모달이 실제로 표시된다.
 - 모달 닫기, Escape, 닫은 뒤 포커스 복원을 확인한다.
 - 320px/390px 모바일에서 가로 넘침이 없다.
-- 로그인·관리 메뉴가 없고 Supabase/Auth 등 외부 API 요청이 없다.
+- 로그인·관리 메뉴가 없다. 2.0.0부터 Supabase REST(`booths`, `products`) 읽기 요청 2건이 있다.
 - 기존 `#/vendor/login`, `#/vendor`, `#/visit` 주소와 새로고침이 원페이지로 돌아온다.
 - GitHub Pages 배포와 Codex 클라우드 환경 게시(Publish)를 혼동하지 않는다.
 
@@ -106,11 +106,12 @@ Supabase 설정 자체, DB·Storage 연결, 로그인·계정, 업체 관리 및
 | `src/App.tsx` | 홈 라우트 및 나머지 해시 경로의 홈 리다이렉트 |
 | `src/components.tsx` | 브랜드·사진·기본 레이아웃. 로그인/관리/별도 메뉴 없음 |
 | `src/lib/public-image.ts` | BASE_URL을 적용한 로컬 이미지 경로 |
-| `src/lib/backend-access.ts` | 1.x.x Supabase 접근 차단 |
+| `src/lib/market-data.ts`, `src/lib/market-rows.ts` | 2.0.0 Supabase 읽기와 행→화면 데이터 변환 |
+| `supabase/migrations/` | DB 스키마·시드 (`scripts/seed-sql.mjs`가 시드 SQL 생성) |
 | `vite.config.ts` | PAGES_BASE_PATH를 이용한 프로젝트 하위 경로 지원 |
 | `.github/workflows/pages.yml` | 키 없이 수행하는 Pages 자동 배포 |
 
-실제 판매 정보를 받으면 `src/data/market.ts`를 수정한다. 사진은 `public/` 아래에 보관한다. 실제 데이터로 교체한 뒤에만 `booth.is_sample=false`로 바꾼다. `price=0`은 ‘0원’, null은 ‘가격 문의’다.
+2.0.0부터 판매 정보는 Supabase `public.products`·`public.booths`를 고친다(`src/data/market.ts`는 시드 원본). 사진은 `public/` 아래에 보관한다. 실제 데이터로 교체한 뒤에만 `booth.is_sample=false`로 바꾼다. `price=0`은 ‘0원’, null은 ‘가격 문의’다.
 
 ## 이미 완료한 검증
 
@@ -119,7 +120,7 @@ Supabase 설정 자체, DB·Storage 연결, 로그인·계정, 업체 관리 및
 - 실제 키 없이 프로젝트 하위 경로용 운영 빌드 성공.
 - Chromium으로 운영 빌드의 로컬 preview를 확인: 정적 상품·가격·사진, 모달·키보드·포커스, 모바일 폭, 기존 해시 경로 리다이렉트 통과.
 - 해당 브라우저 검사에서 외부 API 요청 및 런타임 오류 없음.
-- 빌드 JS에 Supabase 클라이언트·프로젝트 호스트·로그인 호출 코드가 포함되지 않음을 확인.
+- (1.x 당시) 빌드 JS에 Supabase 코드가 없음을 확인했다. 2.0.0부터는 Supabase 클라이언트가 포함된다.
 - 계정 생성·비밀번호 재발급·이미지 정리·통합 검사 스크립트는 실행 전에 차단됨을 확인.
 - 위 결과는 로컬 빌드 검증이다. 실제 공개 서비스 검증은 별도로 필요하다.
 

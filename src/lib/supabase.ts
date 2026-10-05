@@ -1,8 +1,9 @@
-import { requireBackendAccess } from "./backend-access";
 import { createClient } from "@supabase/supabase-js";
+import { imageUrl as siteImageUrl } from "./public-image";
 
-requireBackendAccess();
-
+// Project URL and publishable key, injected at build time from the
+// SUPABASE_URL / SUPABASE_PUBLISHABLE_KEY repository secrets. Reads go through
+// the public RLS policies, so the key only sees active booths and products.
 const url = import.meta.env.VITE_SUPABASE_URL;
 const key = import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY;
 export const configured = Boolean(url && key);
@@ -18,17 +19,11 @@ export const supabase = createClient(
   },
 );
 export const BUCKET = "market-images";
-const samples = new Set([
-  "/sample-images/promotion.jpg",
-  "/sample-images/booth-01.jpg",
-  "/sample-images/booth-01-thumb.jpg",
-]);
+
+// "/brand/..." files ship with the site; other paths live in Storage.
 export function imageUrl(path: string | null | undefined) {
   if (!path) return undefined;
-  if (path.startsWith("/"))
-    return samples.has(path)
-      ? `${import.meta.env.BASE_URL}${path.slice(1)}`
-      : undefined;
+  if (path.startsWith("/")) return siteImageUrl(path);
   return supabase.storage.from(BUCKET).getPublicUrl(path).data.publicUrl;
 }
 

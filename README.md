@@ -1,8 +1,8 @@
 # 2026 양재브릿지 플리마켓
 
-## 1.x.x — 한 매대 정적 원페이지
+## 한 매대 원페이지
 
-현재 버전은 **1.5.0**이다. 변경할 때마다 버전을 올린다(새 기능·섹션은 minor, 문구·상품·사진·버그 수정은 patch). `package.json` 버전을 올리고 같은 커밋에 `vX.Y.Z` 태그를 단다.
+현재 버전은 **2.0.0**이다. 변경할 때마다 버전을 올린다(새 기능·섹션은 minor, 문구·상품·사진·버그 수정은 patch). `package.json` 버전을 올리고 같은 커밋에 `vX.Y.Z` 태그를 단다.
 
 - 1.0.0 (2026-10-04): 콜앤메이슨 매대 페이지 완성
 - 1.1.0: `design/quiet-kitchen`의 톤·소재 섹션·Tom Hunt 영상 카드 반영
@@ -10,12 +10,23 @@
 - 1.3.0: 모달 열림 트랜지션(누른 사진이 커지며 열림, 내용은 뒤따라 스며듦, 닫힘은 제자리 페이드)
 - 1.4.0: PostHog 오류 추적(처리되지 않은 예외)과 이벤트 구조화 로그
 - 1.5.0: 매대 사진 확대 이벤트, 상품 상세 체류 시간 측정
+- 2.0.0: 매대·브랜드·상품 데이터를 Supabase에서 읽음(내용과 화면은 1.5.0과 같음)
 
-양재천 브릿지마켓 콜앤메이슨 매대를 찾은 현장 방문객이 QR로 열어 보는 정적 원페이지다. 로그인, DB 연결, 서버 API, 관리 화면은 사용하지 않는다.
+양재천 브릿지마켓 콜앤메이슨 매대를 찾은 현장 방문객이 QR로 열어 보는 원페이지다. 2.0.0부터 내용은 Supabase DB에서 읽는다. 로그인과 관리 화면은 아직 없다.
 
 페이지 순서: 매대 전경 사진 → 플리마켓 기획상품(종류별로 묶고 싼 가격부터, 누르면 사진 넘기기·설명 상세 창) → 매대 위치 → 브랜드 히어로(Experts in Seasoning since 1919) → 1919년 연표 → 소재(WOOD·ACRYLIC·STEEL) → 브랜드 영상(YouTube, 누를 때 로드)과 Tom Hunt 요리 영상 시리즈 링크. 상단 로고는 공식 홈페이지를 새 창으로 연다.
 
-모든 내용은 [`src/data/market.ts`](src/data/market.ts)에 직접 작성한다.
+### 데이터 (Supabase)
+
+페이지는 Supabase 프로젝트 `sgxnccckhweykhautotb`의 `public.booths`(활성·비샘플 매대 중 `sort_order`가 가장 앞선 1개)와 그 매대의 `public.products`(`sort_order` 순)를 공개 키로 읽는다(`src/lib/market-data.ts`). 읽기는 기존 RLS의 공개 읽기 정책(활성 매대와 그 상품만)을 따른다. 불러오지 못하면 오류 안내와 다시 시도 버튼을 보여 주고 PostHog에 `market_load_failed`를 보낸다.
+
+- `booths`: `market_name`, `name`, `description`, `location_text`, `image_path`, `is_sample`, 그리고 브랜드 콘텐츠 전체를 담은 `brand`(jsonb: 로고·히어로·연표·영상·소재·시리즈·공식몰 주소).
+- `products`: `slug`(분석의 `product_id`), `name`, `category`, `price`, `description`, `image_path`, `gallery`(text[]), `sort_order`.
+- 이미지 경로가 `/`로 시작하면 사이트에 함께 배포되는 `public/` 파일, 아니면 Storage `market-images` 버킷 파일이다. 현재 데이터는 모두 `/brand/...`다.
+
+[`src/data/market.ts`](src/data/market.ts)는 화면 타입과 시드 원본이다. 내용을 고칠 때는 DB를 직접 고친다(Supabase 대시보드 Table Editor 또는 새 마이그레이션). 처음 데이터는 `node scripts/seed-sql.mjs`로 만든 `supabase/migrations/202610050002_seed_cole_and_mason.sql`이다. 마이그레이션 적용: `npx supabase db push --project-ref sgxnccckhweykhautotb`.
+
+필드 규칙(1.x와 같음):
 
 - `booth`: 매대 전경 사진(`image_path`), 위치 문구(`location_text`), 안내 문구. `is_sample`을 true로 두면 상품·가격이 예시라는 미리보기 안내가 표시된다(현재 false).
 - `products`: 상품명·종류(`category`)·플리마켓 가격·설명·대표 사진(`image_path`)·추가 사진(`gallery`). 상품명은 모델명 없이 용도 기준으로, 카드에서 한 줄(320px 기준)에 들어가게 짓는다. 사이즈·색상 변형은 묶지 않고 각각 별도 상품으로 둔다. 정렬은 `src/lib/products.ts`가 자동으로 한다.
@@ -31,11 +42,11 @@ PostHog(US 클라우드)로 페이지뷰·웹 분석·세션 리플레이를 수
 
 제작자 방문 구분: 내 휴대폰·PC에서 주소 끝에 `?creator=on`을 붙여 한 번 열면 그 브라우저가 기억한다. 이후 그 브라우저의 모든 이벤트에 `is_creator=true`가 붙고 세션 리플레이는 녹화하지 않으며, 헤더에 "제작자 모드" 표시가 보인다. 표시를 누르거나 `?creator=off`로 열면 해제된다. 브라우저 저장소를 지우면 다시 켜야 한다. PostHog에서 Settings → Project → Product analytics → "Filter out internal and test users"에 이벤트 속성 `is_creator` = `true`를 추가하면 인사이트·웹 분석에서 제작자 방문을 뺄 수 있다.
 
-GitHub Pages에 배포하며, 필요한 시크릿은 분석용 `POSTHOG_KEY` 하나다. `.github/workflows/pages.yml`이 main push 시 테스트·빌드·배포한다. Settings → Pages → Source를 GitHub Actions로 설정한다. 비공개 저장소는 Pages 지원 요금제가 필요하며 저장소 공개 여부는 자동 변경하지 않는다.
+GitHub Pages에 배포하며, 시크릿은 분석용 `POSTHOG_KEY`와 데이터용 `SUPABASE_URL`·`SUPABASE_PUBLISHABLE_KEY`다(빌드 때 `VITE_*`로 전달). `.github/workflows/pages.yml`이 main push 시 테스트·빌드·배포한다. Settings → Pages → Source를 GitHub Actions로 설정한다. 비공개 저장소는 Pages 지원 요금제가 필요하며 저장소 공개 여부는 자동 변경하지 않는다.
 
 ## 개발
 
-Node.js 24 이상과 pnpm을 사용한다(버전은 `package.json`의 `packageManager`, `corepack enable`로 활성화). `.env.local`은 필요 없다.
+Node.js 24 이상과 pnpm을 사용한다(버전은 `package.json`의 `packageManager`, `corepack enable`로 활성화). 로컬 개발에는 `.env.local`에 `VITE_SUPABASE_URL`과 `VITE_SUPABASE_PUBLISHABLE_KEY`가 필요하다(`.env.example` 참고). 없으면 페이지가 오류 안내를 보여 준다.
 
 ```sh
 pnpm install --frozen-lockfile
@@ -48,10 +59,6 @@ pnpm build
 
 상세 절차: [배포 워크플로우](docs/beta-workflow.md), [운영 안내](docs/operations.md).
 
-## 2.x.x — 향후 기능
+## 2.x.x — 다음 단계
 
-Supabase DB·Storage 연동, 로그인·업체 계정, 매대 편집, 상품 CRUD·사진 업로드는 2.x.x 범위다. `src/auth.tsx`, `src/pages/Vendor.tsx`, `src/lib/supabase.ts`, `supabase/`, 운영자 스크립트 및 `.env.example`은 향후 개발 참고용으로 보존한다. 현재 앱은 이 모듈들을 불러오지 않으며 배포에 Supabase 키를 사용하지 않는다. 관련 패키지도 추후 작업을 위해 유지하지만 현재 브라우저 번들에는 포함하지 않는다.
-
-기존 원격 DB·Auth 설정은 변경하지 않았다. 과거 설계·검증 기록은 1.x.x 배포 요건이 아니며, DB 마이그레이션이나 계정 발급을 지금 실행할 필요가 없다. 2.x.x 도입 시 인증 설정과 권한 검증을 다시 준비한다.
-
-Supabase 클라이언트와 운영자 스크립트는 1.x.x에서 import 시 명시적인 오류로 중단한다. 환경변수로 우회할 수 없으며 연결 설정 자체도 2.x.x에서 시작한다. 기존 클라우드 설정에 남은 Supabase 항목은 1.x.x에 필요하지 않다.
+2.0.0은 읽기 전환만 했다. 로그인·업체 계정, 매대 편집, 상품 CRUD·사진 업로드(Storage)는 이후 2.x 범위다. `src/auth.tsx`, `src/pages/Vendor.tsx`, `src/pages/Market.tsx`, `src/lib/images.ts`와 운영자 스크립트(`scripts/*.mjs`, `.env.local`의 `SUPABASE_PROJECT_REF`·`SUPABASE_URL`·`SUPABASE_SECRET_KEY` 사용)는 아직 라우트에 연결하지 않았다. 1.x의 Supabase 차단(`backend-access.ts`)은 2.0.0에서 제거했다.

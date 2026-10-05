@@ -1,5 +1,6 @@
-// 1.x.x content source. Replace these examples with confirmed sale information.
-// Images live under public/; paths are relative to that directory.
+// 2.0.0부터 페이지는 Supabase(public.booths/products)에서 내용을 읽는다.
+// 이 파일은 그 시드 원본(scripts/seed-sql.mjs)과 화면이 쓰는 타입 정의다.
+// 이미지는 public/ 아래 파일이며 경로는 그 디렉터리 기준이다.
 export interface MarketProduct {
   id: string;
   name: string;
@@ -63,6 +64,14 @@ export const booth = {
   location_text: "꿈놀이터 계단 위 ♥",
   is_sample: false,
 };
+
+export type MarketBrand = typeof brand;
+export type MarketBooth = typeof booth;
+export interface Market {
+  booth: MarketBooth;
+  brand: MarketBrand;
+  products: MarketProduct[];
+}
 
 export const products: MarketProduct[] = [
   {
